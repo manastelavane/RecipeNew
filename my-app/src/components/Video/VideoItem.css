@@ -1,0 +1,31 @@
+.video-item{
+    display: flex !important;
+    /* align-items: center !important; */
+    cursor: pointer;
+    padding: 4px ;
+    border: 1px solid rgb(104, 104, 104);
+    font-weight: 400;
+}
+.video-item.item img{
+    max-width: 15vw;
+    border: 1px solid rgb(143, 143, 143);
+    border-radius: 3px;
+}
+.video-item .header{
+    font-size: 13px;
+    padding: 3px;
+}
+.container{
+    padding: 7px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+iframe{
+    width: 66vw;
+    height: 73vh;
+}
+.list{
+    height: auto;
+}
