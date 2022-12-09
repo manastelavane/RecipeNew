@@ -5,21 +5,7 @@ import SortRec from '../models/Rec.js'
 
 const router = express.Router();
 
-// export const getCards = async (req, res) => {
-//     const { page } = req.query;
-    
-//     try {
-//         const LIMIT = 2;
-//         const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
-    
-//         const total = await Apple.countDocuments({});
-//         const posts = await Apple.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
 
-//         res.json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
-//     } catch (error) {    
-//         res.status(404).json({ message: error });
-//     }
-// }
 export const getCards = async (req, res) => { 
     try {
         // console.log(req.query);
@@ -33,7 +19,7 @@ export const getCards = async (req, res) => {
         const LIMIT = 10;
         const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
     
-        const total = await SortRec.countDocuments({RecipeCategory:category});
+        const total = await SortRec.countDocuments(category=="All"?{}:{RecipeCategory:category});
         // console.log(category1)
         const cardMessages = await SortRec.find(category1).limit(LIMIT).skip(startIndex);
         // console.log(postMessages.length)  
