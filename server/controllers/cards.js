@@ -23,20 +23,38 @@ const router = express.Router();
 export const getCards = async (req, res) => { 
     try {
         // console.log(req.query);
-        const category=req.query.category;
+        const {category,page}=req.query;
+        // console.log("i got",category,page);
         const category1 = (category!="All")
         ? {
             RecipeCategory: category,
             }
         : {};
+        const LIMIT = 10;
+        const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
+    
+        const total = await SortRec.countDocuments({RecipeCategory:category});
         // console.log(category1)
-        const postMessages = await SortRec.find(category1).limit(20);
-        // console.log(postMessages)  
-        const productsCount = await SortRec.countDocuments();
+        const cardMessages = await SortRec.find(category1).limit(LIMIT).skip(startIndex);
+        // console.log(postMessages.length)  
         // console.log(productsCount)
-        res.status(200).json({postMessages,productsCount});
+        // console.log(category);
+        // console.log(Number(page));
+        // console.log(Math.ceil(total / LIMIT));
+        res.status(200).json({data:cardMessages, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
     } catch (error) {
         res.status(404).json({ message: error });
+    }
+}
+export const getCard = async (req, res) => { 
+    const { id } = req.params;
+    console.log(id)
+    try {
+        const card = await SortRec.findById(id);
+        // console.log(card)
+        res.status(200).json(card);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
 }
 export const createCard = async (req, res) => {
