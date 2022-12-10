@@ -12,12 +12,7 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
     width: 'auto',
   },
-  userName: {
-    display: 'flex',
-    alignItems: 'center',
-    color:'white',
-    margin:'0 6px'
-  },
+  
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],

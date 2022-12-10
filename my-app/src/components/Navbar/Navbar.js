@@ -62,7 +62,7 @@ const Navbar = () => {
                     {user?.result ? (
                     <div className={classes.profile}>
                         <Avatar className={classes.purple} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
-                        <Typography className={classes.userName} variant="h6">{trimname(user?.result.name)}</Typography>
+                        <Typography className="userName" variant="h6">{trimname(user?.result.name)}</Typography>
                         <Button variant="contained" className={classes.logout} color="secondary" size="small" onClick={logout}>Logout</Button>
                     </div>
                     ) : (

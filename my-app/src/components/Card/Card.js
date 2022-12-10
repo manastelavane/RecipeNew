@@ -87,7 +87,7 @@ export default function ActionAreaCard({card}) {
           </Typography>
           <div className="second-line">
           <Rating name="half-rating" value={card.AggregatedRating} precision={0.5} readOnly />&nbsp;&nbsp;
-          <span className='rating-count'>{card.ReviewCount} ratings</span>
+          <span className='rating-count'>{card.CommentsCount} ratings</span>
           </div>
           <div className='third-line'>
             <div className='timer-class'>

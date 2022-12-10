@@ -153,6 +153,21 @@
     width: 80%;
     margin: 15px auto 5px auto;
   }
+  .pagination{
+    display: flex;
+    justify-content: center;
+    margin: 40px;
+  }
+  .pagination-ul{
+    justify-content: space-around;
+  }
+  .autocompletee{
+    background-color: white;
+    border-radius: 20px;
+    /* border: 2px solid black; */
+    align-items: center;
+    justify-content: center;
+  }
 @media screen and (max-width:900px) {
     .hero{
         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../images/hello.jpeg");

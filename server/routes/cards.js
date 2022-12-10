@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getCards, createCard,getCard } from '../controllers/cards.js';
+import { getCards, createCard,getCard,createCardComment } from '../controllers/cards.js';
 // import { getCards, getCardsBySearch, getCard, createCard, updateCard, likeCard, commentCard, deleteCard } from '../controllers/cards.js';
 
 const router = express.Router();
@@ -10,6 +10,7 @@ const router = express.Router();
 router.get('/', getCards);
 router.post('/',  createCard);
 router.get('/:id', getCard);
+router.put('/review', createCardComment);
 // router.post('/', auth,  createCard);
 // router.patch('/:id', auth, updateCard);
 // router.delete('/:id', auth, deleteCard);

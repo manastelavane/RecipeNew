@@ -1,7 +1,11 @@
 import React ,{useState,useEffect} from 'react'
 import { useDispatch,useSelector } from 'react-redux'
 import { getCards } from '../../actions/cards'
+import { Pagination, PaginationItem } from '@material-ui/lab';
+import { Link, useNavigate } from 'react-router-dom';
 import './HomeStyles.css'
+import { useLocation } from 'react-router-dom';
+import Autocompletee from './Autocomplete/Autocomplete';
 // import {BsFilter} from 'react-icons/bs'
 import ActionAreaCard from '../Card/Card'
 // import image2 from '../../images/beverages.jpg' 
@@ -9,19 +13,32 @@ import ActionAreaCard from '../Card/Card'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Navbar from '../Navbar/Navbar'
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 const Home = () => {
+  const query = useQuery();
+  const page = query.get('page') || 1;
   const options = ['All','< 15 Mins', '< 30 Mins', '< 4 Hours', '< 60 Mins', 'Apple', 'Asian', 'Australian', 'Bar Cookie', 'Beans', 'Berries', 'Beverages', 'Black Beans', 'Breads', 'Breakfast', 'Brown Rice', 'Brunch', 'Cajun', 'Canadian', 'Candy', 'Cauliflower', 'Cheese', 'Cheesecake', 'Chicken', 'Chicken Breast', 'Chicken Thigh & Leg', 'Chinese', 'Chowders', 'Christmas', 'Chutneys', 'Clear Soup', 'Corn', 'Crab', 'Curries', 'Dessert', 'Drop Cookies', 'European', 'For Large Groups', 'Frozen Desserts', 'Fruit', 'Gelatin', 'Grains', 'Greek', 'Greens', 'Gumbo', 'Halibut', 'Ham', 'Healthy', 'High Protein', 'Japanese', 'Jellies', 'Kid Friendly', 'Lactose Free', 'Lamb/Sheep', 'Lemon', 'Lentil', 'Long Grain Rice', 'Low Cholesterol', 'Low Protein', 'Lunch/Snacks', 'Mango', 'Meat', 'Meatballs', 'Meatloaf', 'Mexican', 'Nuts', 'One Dish Meal', 'Onions', 'Oranges', 'Pasta Shells', 'Penne', 'Peppers', 'Pie', 'Pineapple', 'Pork', 'Potato', 'Potluck', 'Poultry', 'Punch Beverage', 'Quick Breads', 'Rice', 'Roast Beef', 'Salad Dressings', 'Sauces', 'Savory', 'Savory Pies', 'Scones', 'Shakes', 'Short Grain Rice', 'Smoothies', 'Sourdough Breads', 'Southwest Asia (middle East)', 'Soy/Tofu', 'Spaghetti', 'Spinach', 'Spreads', 'Steak', 'Stew', 'Stocks', 'Strawberry', 'Summer', 'Tarts', 'Thai', 'Tilapia', 'Tuna', 'Veal', 'Vegan', 'Vegetable', 'Very Low Carbs', 'Weeknight', 'White Rice', 'Whole Chicken', 'Yam/Sweet Potato', 'Yeast Breads']
   const [inputValue, setInputValue] = useState(options[0]);
   const [category, setCategory] = useState('All');
   // const [currentId, setCurrentId] = useState(0);
+  const {isLoading,cards,numberOfPages} = useSelector((state) => state.cards);
   const dispatch = useDispatch();
+  const navigate=useNavigate()
+  useEffect(()=>{
+    dispatch(getCards(category,1))
+  },[])
   useEffect(() => {
-    dispatch(getCards(category));
-  }, [ dispatch,category]);
-  const cards = useSelector((state) => state.cards);
-
-  console.log(cards?.postMessages)
-  console.log("Hi")
+    dispatch(getCards(category,page));
+  }, [ dispatch,page]);
+  useEffect(() => {
+    dispatch(getCards(category,1))
+    navigate(`/card?category=${category}&page=1`);
+  }, [ dispatch,category,navigate]);
+  console.log(numberOfPages)
+  // console.log("card",cards)
+  // console.log("Hi")
   return (
     <>
     <Navbar/>
@@ -29,14 +46,15 @@ const Home = () => {
       <div className='hero'>
         <div className='hero-content'>
 
-      <h3 style={{textShadow:"2px 1px black"}}>Explore over <b style={{textShadow:"1px 1px black"}}>60,000+</b> Best Recipes over the world.</h3>
+      <h3 style={{textShadow:"2px 1px black"}}>Explore over <b style={{textShadow:"1px 1px black"}}>150,000+</b> Best Recipes over the world.</h3>
       <br/>
-      <div className="hero-input">
+      {/* <div className="hero-input"> */}
             
-            <input className='hero-search' placeholder='Search Recipe by name...'></input>
+            {/* <input className='hero-search' placeholder='Search Recipe by name...'></input> */}
+            <Autocompletee />
             
-        <button><i className="fa fa-search icon" ></i> </button>
-      </div>
+        {/* <button><i className="fa fa-search icon" ></i> </button> */}
+      {/* </div> */}
       <br/>
       <h6 style={{textShadow:"2px 1px black",textAlign:"center"}}>Can't think of any Recipe? <span className='lightfont'>Try out this Popular tags.</span></h6>
       <div className="tags">
@@ -129,12 +147,28 @@ const Home = () => {
       />
       </div>
       <div className='card-container'>
-        {cards?.postMessages &&
-              cards?.postMessages.map((card) => (
+        {isLoading?(<>Loading</>):(<>{cards &&
+              cards.map((card) => (
                 <ActionAreaCard card={card} key={card._id} />
               ))
+}</>)
         }
       </div>
+      <div className='pagination'>
+
+     
+      <Pagination
+      className="pagination-ul"
+      count={numberOfPages}
+      page={Number(page) || 1}
+      variant="outlined"
+      color="primary"
+      renderItem={(item) => (
+        <PaginationItem {...item} component={Link} to={`/card?category=${category}&page=${item.page}`} />
+      )}
+
+    />
+     </div>
     </div>
     </>
   )

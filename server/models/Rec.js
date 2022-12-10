@@ -30,9 +30,32 @@ const recSchema = mongoose.Schema({
     ProteinContent:Number,
     RecipeServings:Number,
     RecipeYield:String,
-    RecipeInstructions:[String]
-
-    
+    RecipeInstructions:[String],
+    Comments:[
+        {
+            user: {
+              type: mongoose.Schema.ObjectId,
+              ref: "users",
+              required: true,
+            },
+            name:{
+              type: String,
+              required: true,
+            },
+            rating: {
+              type: Number,
+              required: true,
+            },
+            comment: {
+              type: String,
+              required: true,
+            },
+          },
+    ],
+    CommentsCount:{
+        type: Number,
+        required: true,
+      },
 },{collection:'SortRec'});
 
 var Rec =  mongoose.model('SortRec', recSchema);

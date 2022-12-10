@@ -230,3 +230,124 @@ li{
     border:2px solid #333;
     border-radius: 0px 7px 7px 0px;
   }
+  .quantity{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+  }
+  .ingredients{
+    margin: 10px;
+    padding: 15px;
+  }
+  .ingredients-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .ingredients-item{
+    width: 450px;
+    background-color: #ebeff4;
+    padding: 10px;
+    margin: 5px !important;
+    border: 1px solid black;
+    border-radius: 16px;
+  }
+  .steps{
+    margin: 10px;
+    padding: 15px;
+  }
+  .steps-box{
+    background-color: #ebeff4 ;
+    padding: 30px;
+    margin: 5px !important;
+    border-radius: 16px;
+    line-height: 30px;
+    font-weight: 500;
+  }
+  /* .dialog-review{
+    margin: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  } */
+  .myreview-button{
+    display: flex;
+    justify-content: center;
+  }
+  .submitReview {
+    border: none;
+    background-color: #3f51b5;
+    font: 500 1.3vmax "Roboto";
+    border-radius: 20px;
+    padding: 0.6vmax 2vmax;
+    margin: 1vmax 0;
+    color: white;
+    cursor: pointer;
+    transition: all 0.5s;
+    outline: none;
+  }
+  .submitReview:hover {
+    background-color:#293997;
+    transform: scale(1.1);
+  }
+  
+  .submitDialog {
+    display: flex;
+    flex-direction: column;
+  }
+  .submitDialogTextArea {
+    border: 1px solid rgba(0, 0, 0, 0.082);
+    margin: 1vmax 0;
+    outline: none;
+    padding: 1rem;
+    font: 300 1rem "Roboto";
+  }
+  
+  .commentsHeading {
+    color: #000000be;
+    font: 500 1.4vmax "Roboto";
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.226);
+    padding: 1vmax;
+    width: 20vmax;
+    margin: auto;
+    margin-bottom: 4vmax;
+  }
+  .comments {
+    display: flex;
+    overflow: auto;
+  }
+  
+  .commentCard {
+    flex: none;
+  
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.226);
+    border: 1px solid rgba(56, 56, 56, 0.116);
+    width: 20vmax;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1vmax;
+    padding: 3vmax;
+  }
+  .commentCard > img {
+    width: 5vmax;
+  }
+  .commentCard > p {
+    color: rgba(0, 0, 0, 0.836);
+    font: 600 0.9vmax "Roboto";
+  }
+  .commentCardComment {
+    color: rgba(0, 0, 0, 0.445);
+    font: 300 0.8vmax cursive;
+  }
+  
+  .noComments {
+    font: 400 1.3vmax "Gill Sans";
+    text-align: center;
+    color: rgba(0, 0, 0, 0.548);
+    margin-bottom: 15px;
+  }

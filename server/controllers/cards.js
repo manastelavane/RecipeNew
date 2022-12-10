@@ -56,6 +56,51 @@ export const createCard = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
+export const createCardComment = async (req, res) => {
+    const { rating, comment, CardId,UserId,UserName } = req.body;
+    console.log("cardid",CardId)
+    console.log("req",UserId)
+    console.log(rating,comment,CardId)
+    const review = {
+      user: UserId,
+      name:UserName,
+      rating: Number(rating),
+      comment,
+    };
+    // console.log(review)
+  
+    const card = await SortRec.findById(CardId);
+    // console.log(card)
+    const isReviewed = card.Comments.find(
+      (rev) => rev?.user?.toString() === UserId.toString()
+    );
+    console.log(UserId._id)
+  
+    if (isReviewed) {
+      card.Comments.forEach((rev) => {
+        if (rev.user.toString() === UserId.toString())
+          (rev.rating = rating), (rev.comment = comment);
+      });
+    } else {
+      card.Comments.push(review);
+      card.CommentsCount = card.Comments.length;
+    }
+  
+    let avg = 0;
+  
+    card.Comments.forEach((rev) => {
+      avg += rev.rating;
+    });
+  
+    card.AggregatedRating = (avg+card.AggregatedRating) / (card.Comments.length+1);
+  
+    await card.save({ validateBeforeSave: false });
+  
+    res.status(200).json({
+      success: true,
+    });
+  };
+
 // export const getCardsBySearch = async (req, res) => {
 //     // const { searchQuery, tags } = req.query;
 

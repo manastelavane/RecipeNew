@@ -10,11 +10,13 @@ import './App.css'
 import Recipe from './components/Recipe/Recipe';
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
-  console.log(user)
+  // console.log(user)
   return (
       <>
         <Routes>
+
           <Route path="/" exact element={<Home/>} />
+          <Route path="/card" exact element={<Home/>} />
           <Route path="/auth" exact element={<Auth />} />
           <Route path="/recipe/:id" element={<Recipe />} />
           {/* <Route path="/:category" element={<Home category=category />} /> */}

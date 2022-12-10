@@ -1,53 +1,5 @@
-// import React, { useEffect } from 'react'
-// import './Recipe.css'
-// import image2 from '../../images/beverages.jpg' 
-// import {BiTimer} from 'react-icons/bi'
-// const Recipe = () => {
-//   return (
-//     <div className='maincontainer'>
-//       <div className='green'>
-//         <div className='three-details'>
-//             <div className='timeitem preptime'>
-//                 <h5>
-//                     PREP TIME
-//                 </h5>
-//                 <div className='timedetails'>
-//                     <BiTimer className='timer-icon'/>
-//                     <h5>30 mins</h5>
-//                 </div>
-//             </div>
-//             <div className='timeitem cooktime'>
-//                 <h5>
-//                     COOK TIME
-//                 </h5>
-//                 <div className='timedetails'>
-//                     <BiTimer className='timer-icon'/>
-//                     <h5>30 mins</h5>
-//                 </div>
-//             </div>
-//             <div className='timeitem readytime'>
-//                 <h5>
-//                     READY TIME
-//                 </h5>
-//                 <div className='timedetails'>
-//                     <BiTimer className='timer-icon'/>
-//                     <h5>30 mins</h5>
-//                 </div>
-//             </div>
-//         </div>
-//         <img src={image2}/>
-//       </div>
-//       <div className='recipedetails'>
-//         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat accusantium consequatur sequi reiciendis autem? Reprehenderit quisquam possimus, libero fuga unde in id quis blanditiis cumque. Harum excepturi laborum quis commodi.
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Recipe
-
 import React,{useEffect,useState} from 'react'
-import image2 from '../../images/beverages.jpg' 
+// import image2 from '../../images/beverages.jpg' 
 import './Recipe.css'
 import { Rating } from '@mui/material';
 import {BiTimer} from 'react-icons/bi'
@@ -55,24 +7,112 @@ import { Doughnut} from "react-chartjs-2";
 import VideoDetail from '../Video/VideoDetail'
 import VideoList from '../Video/VideoList'
 import useVideos from '../Video/hooks/useVideos';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCard,newComment } from '../../actions/cards';
 import Navbar from '../Navbar/Navbar';
+import { TextField,Typography } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
+// import CommentsCard from './CommentsCard.js';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Button,
+  } from "@material-ui/core";
+import CommentsCard from './CommentsCard.js';
+//   import { Rating } from "@material-ui/lab";
 const Recipe = () => {
-    const [selectedVideo,setSelectedVideo]=useState(null)
-  const [videos,search]=useVideos('dessert food recipe english')
-  useEffect(()=>{
-    setSelectedVideo(videos[0]);
-  },[videos])
+    const user = JSON.parse(localStorage.getItem('profile'));
+    console.log(user)
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    // let {card}={
+    //     _id:323,
+    //     Name:"manas",
+    //     CookTime:212,
+    //     PrepTime:232,
+    //     TotalTime:232,
+    //     Description:"sdnbadhad",
+    //     Images:["https://img.sndimg.com/food/image/upload/w_555,h_416,c_fit,fl_progressive,q_95/v1/img/recipes/45/80/9/MwuCd6HpQ5mDvn4OLRkA_0S9A9886.jpg"],
+    //     RecipeCategory:"Vhivken",
+    //     Keywords:["chsiai","snjdd"],
+    //     CarbohydrateContent:424,
+    //     ProteinsContent:434,
+    //     FatContent:343
+    // }
+    const { card,isLoading } = useSelector((state) => state.cards);
+    const { success, error: reviewError } = useSelector((state) => state.newCommentReducer);
+    useEffect(() => {
+        dispatch(getCard(id));
+      }, [id,dispatch,success,reviewError]);
+    //   useEffect(()=>{
+    //     setSelectedVideo(videos?.length===0?null:videos[0]);
+    //   },[search,dispatch])
     
+    //   console.log(card)
+    //   const [selectedVideo,setSelectedVideo]=useState(null)
+  
+  const [quantity,setQuantity]=useState(card?.RecipeServings)
+  const [curcomment,setCurcomment]=useState('')
+  const [rating,setRating]=useState(0)
+  const [open, setOpen] = useState(false);
+  const commentSubmitHandler = () => {
+    const myForm = new FormData();
+
+    myForm.set("rating", rating);
+    myForm.set("comment", curcomment);
+    myForm.set("CardId", card?._id);
+    myForm.set("UserId", user?.result?._id);
+    myForm.set("UserName", user?.result?.name);
+
+    dispatch(newComment(myForm));
+
+    setOpen(false);
+  };
+  
+//   const [videos,search]=useVideos(`${card!==undefined?card?.Name:'paneer'} food recipe english`)
+      if (isLoading) {
+        return (
+          <>
+            Loading
+          </>
+        );
+      }
+    // console.log(card)
+    
+
+  
+    // console.log("videos",videos);
+    // console.log("search",search)
+    // console.log("card",card?.Name)
     const doughnutState = {
         labels: ["Carbs", "Proteins","Fats"],
         datasets: [
           {
             backgroundColor: ["#f94642", "#3177bb","#fda120"],
             hoverBackgroundColor: ["#ff7f7d","#3177bb", "#fda120"],
-            data: [5, 10,15],
+            data: [card?.CarbohydrateContent,card?.ProteinContent
+                ,card?.FatContent],
           },
         ],
       };
+      const submitCommentToggle = () => {
+        open ? setOpen(false) : setOpen(true);
+      };
+    
+    //   const reviewSubmitHandler = () => {
+    //     const myForm = new FormData();
+    
+    //     myForm.set("rating", rating);
+    //     myForm.set("comment", comment);
+    //     myForm.set("productId", match.params.id);
+    
+    //     dispatch(newReview(myForm));
+    
+    //     setOpen(false);
+    //   };
+      
   return (
     <>
     <Navbar/>
@@ -93,7 +133,7 @@ const Recipe = () => {
                                                 <BiTimer className='timer-icon'/>
                                             </div>
                                             <p className='time-value'>
-                                                10&nbsp; 
+                                                {card?.PrepTime}&nbsp; 
                                                 <span className='time-value__unit'>min</span>
                                             </p>
                                         </div>
@@ -109,7 +149,7 @@ const Recipe = () => {
                                                 <BiTimer className='timer-icon'/>
                                             </div>
                                             <p className='time-value'>
-                                                 10&nbsp; 
+                                                 {card?.CookTime}&nbsp; 
                                                 <span className='time-value__unit'>min</span>
                                             </p>
                                         </div>
@@ -125,7 +165,7 @@ const Recipe = () => {
                                                 <BiTimer className='timer-icon'/>
                                             </div>
                                             <p className='time-value'>
-                                                10&nbsp; 
+                                                {card?.TotalTime}&nbsp; 
                                                 <span className='time-value__unit'>min</span>
                                             </p>
                                         </div>
@@ -134,27 +174,29 @@ const Recipe = () => {
                             </ul>
                         </div>
                         <div className='two-container-content-header'>
-                            <h1 className='header__header'>Keto Italian Cabage Noddles</h1>
+                            <h1 className='header__header'>{card?.Name}</h1>
                             
                             <div className='header__rating'>
                                 <div className='header__rating'>
-                                    <Rating name="half-rating" value={3.5} precision={0.5} readOnly />&nbsp;&nbsp;
-                                    <span className='rating-count'>{5} ratings</span>
+                                    <Rating name="half-rating" value={card?.AggregatedRating} precision={0.5} readOnly />&nbsp;&nbsp;
+                                    <span className='rating-count'>{card?.CommentsCount} ratings</span>
                                 </div>      
                             </div>
+
                             <div className='header__text'>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum blanditiis quod molestias labore. Mollitia, eius? Est, neque optio libero dicta nulla in corrupti minus similique sunt quibusdam magnam, eos quod? Cupiditate eius, libero, atque architecto consequatur sed nisi perferendis aspernatur quaerat nulla fugit deserunt consectetur obcaecati quisquam adipisci similique. Exercitationem, id. Labore dolorem alias delectus pariatur ipsam vel excepturi quo repellendus praesentium q
+                            {card?.Description}
                                </div>
                             <div className="tags">  
-                                <span>Gluten Free</span>
-                                <span>Quick & Easy</span>
-                                <span>Snacks</span>
-                                <span>Desserts</span>
+                                {
+                                    card?.Keywords.map((keyword)=>(
+                                        <span key={keyword}>{keyword}</span>
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>
                     <div className='two-container-image'>
-                    <img src={image2} alt="imageOfRecipe" className="recipe-image"/>
+                    <img src={card?.Images[0]} alt="imageOfRecipe" className="recipe-image"/>
                     
                     </div>
                 </div>
@@ -164,14 +206,14 @@ const Recipe = () => {
                 <div className='nutrients-info'>
                     <div className='nutrients'>
                         <ul className='ul-nutrients'>
-                            <li className='li-nutrients'>Net Carbs : 5g</li>
-                            <li className='li-nutrients'>Sugar Content : 5g</li>
-                            <li className='li-nutrients'>Proteins : 5g</li>
-                            <li className='li-nutrients'>Cholestrol Content : 5g</li>
-                            <li className='li-nutrients'>Fats : 5g</li>
-                            <li className='li-nutrients'>Fibre Content : 5g</li>
-                            <li className='li-nutrients'>Calories : 5cal</li>
-                            <li className='li-nutrients'>Sodium Content : 5g</li>
+                            <li className='li-nutrients'>Carbohydrates : {card?.CarbohydrateContent}g</li>
+                            <li className='li-nutrients'>Sugar Content : {card?.SugarContent}g</li>
+                            <li className='li-nutrients'>Proteins : {card?.ProteinContent}g</li>
+                            <li className='li-nutrients'>Cholestrol Content : {card?.CholesterolContent}mg</li>
+                            <li className='li-nutrients'>Fats : {card?.FatContent}g</li>
+                            <li className='li-nutrients'>Fibre Content : {card?.FiberContent}g</li>
+                            <li className='li-nutrients'>Calories : {card?.Calories}cal</li>
+                            <li className='li-nutrients'>Sodium Content : {card?.SodiumContent}mg</li>
                         </ul>
                     </div>
                 </div>
@@ -181,7 +223,7 @@ const Recipe = () => {
                 </div>
                 
             </div>
-            <div className='grid'>
+            {/* <div className='grid'>
         <div className='row'> 
           <div className='eleven-wide'>
             <VideoDetail video={selectedVideo} />
@@ -190,9 +232,85 @@ const Recipe = () => {
             <VideoList videos={videos} onVideoSelect={(video)=>setSelectedVideo(video)}/>
           </div>
         </div>
+      </div> */}
+      <div className='quantity'>
+        Quantity : &nbsp;
+        <TextField name="quantity" variant="outlined" color='primary'  value={quantity} onChange={(e) => setQuantity( e.target.value )} />
       </div>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit totam nostrum veniam, recusandae repudiandae numquam sint excepturi officiis earum adipisci id ullam minima asperiores nihil saepe? Ad at eos aliquid explicabo atque. Deleniti fugit est ad similique? Dicta, vero omnis, nisi perspiciatis quae voluptatibus sint natus veritatis vitae iusto eius maxime, quas eum architecto debitis! Animi vitae numquam ea corrupti dicta omnis, recusandae voluptatibus commodi voluptatum! Animi aspernatur adipisci qui nihil quisquam nisi est quasi cum fuga, praesentium et, nostrum voluptate a ipsum facere natus corporis, ipsa explicabo voluptates nobis facilis minus voluptatem aperiam. Dolores praesentium placeat, odio quia repellendus error voluptatum eaque pariatur assumenda! Dolor reprehenderit fugiat obcaecati repellendus quidem fuga? Quas eveniet porro harum tempore, sequi quidem officiis omnis delectus deleniti autem ab eum praesentium nulla modi, ipsum, recusandae nihil repellendus eaque perspiciatis saepe ut sapiente adipisci dolorum. Quaerat ab delectus libero ipsa. Laboriosam facilis ipsam ad eos officia repellat iusto sint saepe qui sed, nihil illo harum reiciendis ducimus, maiores placeat praesentium voluptates, magni nemo inventore perferendis eius ipsum! Eligendi a rem iusto rerum mollitia odio molestiae dicta harum natus incidunt? Veritatis fuga vel accusantium. Consequatur dolores ratione vel error id sequi itaque culpa voluptatem illum voluptatum.
+      <div className='ingredients'>
+      <Typography variant="h4">Ingredients :</Typography>
+      <div className='ingredients-list'>
+        {
+            card?.RecipeIngredientParts.map((ing,i)=>(
+                <Typography variant="h6" className='ingredients-item' key={i}>{card.RecipeIngredientQuantities[i]} - {ing}</Typography>
+            ))
+            
+        }
+      </div>
+      </div>
+      <div className='steps'>
+        <Typography variant="h4">Recipe Steps :</Typography>
+        <div className='steps-box'>
+            <ol>
+            {
+                card?.RecipeInstructions.map((rec)=>(
+                    <li key={rec}>{rec}</li>
+                ))   
+            }
+            </ol>
         </div>
+      </div>
+      <div className='myreview-button'>
+
+      <button onClick={submitCommentToggle} className="submitReview">
+                Comment
+              </button>
+      </div>
+      <h3 className="commentsHeading">Comments</h3>
+    <Dialog
+    aria-labelledby="simple-dialog-title"
+    open={open}
+    onClose={submitCommentToggle}
+    >
+    <DialogTitle>Submit Your Comment</DialogTitle>
+    <DialogContent className="submitDialog">
+        <Rating
+        onChange={(e) => setRating(parseInt(e.target.value))}
+        value={parseInt(rating)}
+        size="large"
+        />
+
+        <textarea
+        maxLength='250'
+        className="submitDialogTextArea"
+        cols="30"
+        rows="5"
+        value={curcomment}
+        onChange={(e) => setCurcomment(e.target.value)}
+        ></textarea>
+    </DialogContent>
+    <DialogActions>
+        <Button onClick={submitCommentToggle} color="secondary">
+        {/* <Button onClick={submitReviewToggle} color="secondary"> */}
+        Cancel
+        </Button>
+        <Button onClick={commentSubmitHandler} color="primary">
+        Comment
+        </Button>
+    </DialogActions>
+    </Dialog>
+    {card?.Comments && card.Comments[0] ? (
+            <div className="comments">
+              {card.Comments &&
+                card.Comments.map((comment) => (
+                  <CommentsCard key={comment._id} comment={comment} />
+                ))}
+            </div>
+          ) : (
+            <p className="noComments">No Comments Yet</p>
+          )}
+    {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, repudiandae! Deserunt quam, fuga iusto nemo dolorum rerum accusantium ipsum. Saepe sapiente natus delectus ducimus eos vel vitae? Ullam ipsa voluptatem distinctio excepturi itaque in consectetur minima error eum exercitationem alias fuga similique, hic at, dolorem odit unde dolore eveniet minus obcaecati delectus autem. Ipsum accusamus distinctio molestias officiis aliquid sint amet nam molestiae! Eum porro, fugit molestias alias sint iste inventore nobis quam esse unde illo vitae aspernatur ad, laboriosam eaque? Aliquid quo sit, totam explicabo voluptas saepe a repellendus aliquam eum alias tempore provident, inventore harum ea beatae, ratione sequi. Enim non, error nam voluptatum temporibus optio quod fugiat ad ex saepe eligendi dignissimos nobis illo, quo animi odio dolores id. Quisquam recusandae ducimus necessitatibus maxime nostrum blanditiis illo perferendis sint quidem, ex at! Recusandae amet excepturi tempora molestias adipisci assumenda nisi quisquam! Tempora saepe reprehenderit iusto ea voluptate reiciendis voluptas quaerat eius unde quia expedita ipsum deserunt consequatur repellendus, animi quos. Corporis earum delectus quae odio laudantium magnam fuga quia esse, est ullam nihil veniam tempora id reiciendis ipsum aliquid omnis velit minus non eaque dolores maiores inventore quam. Nesciunt quae ipsam repellat sint adipisci doloremque veniam? Voluptatibus? */}
+           </div>
     </section>
     </>
   )
