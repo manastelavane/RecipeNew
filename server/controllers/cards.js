@@ -102,9 +102,9 @@ export const createCardComment = async (req, res) => {
   };
 
 export const getCardsBySearch = async (req, res) => {
-    console.log("serverrr")
+    // console.log("serverrr")
     const { Keywords } = req.query;
-    console.log("server",Keywords)
+    // console.log("server",Keywords)
     try {
         // const title = new RegExp(searchQuery, "i");
         const cards = await SortRec.find({  Keywords: { $in: Keywords.split(',') } }).limit(4);

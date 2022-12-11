@@ -7,12 +7,17 @@ import dotenv from 'dotenv'
 import userRouter from "./routes/user.js";
 import cardRouter from "./routes/cards.js";
 import SortRec from './models/Rec.js'
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+import UserModal from "./models/user.js";
 
 const app = express();
 dotenv.config();
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
+const secret = 'test';
 
 
 app.use("/user", userRouter);
@@ -40,6 +45,7 @@ mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnified
       return res.json(error.message)
     }
   })
+ 
   app.get('/searchh', async (req, res) => {
     const { Keywords,category } = req.query;
     var array = Keywords.split(',');
@@ -85,19 +91,3 @@ mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnified
         res.status(404).json({ message: error.message });
     }
   })
-  // app.get('/searchh', async (req, res) => {
-  //   const { Keywords } = req.query;
-  //   console.log("server",Keywords)
-  //   try {
-  //       // const title = new RegExp(searchQuery, "i");
-  //       const cards = await SortRec.find({  Keywords: { $in: Keywords.split(',') } }).sort({AggregatedRating:-1,}).limit(4);
-  //       console.log("start")
-  //       cards.map((card)=>{
-  //           console.log(card.Name)
-  //       })
-        
-  //       res.json({data:cards });
-  //   } catch (error) {    
-  //       res.status(404).json({ message: error.message });
-  //   }
-  // })

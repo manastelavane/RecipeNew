@@ -8,6 +8,7 @@ import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
 import './App.css'
 import Recipe from './components/Recipe/Recipe';
+import Profile from './components/Profile/Profile';
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
   // console.log(user)
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/card" exact element={<Home/>} />
           <Route path="/auth" exact element={<Auth />} />
           <Route path="/recipe/:id" element={<Recipe />} />
+          <Route path="/profile" element={<Profile />} />
           {/* <Route path="/:category" element={<Home category=category />} /> */}
           {/* <Route path="/auth" exact element={() => ((!user || user.length===0) ? <Auth /> : navigate('/'))} /> */}
         </Routes>

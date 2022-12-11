@@ -26,7 +26,7 @@ export const signin = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-  const { email, password, firstName, lastName } = req.body;
+  const { email, password, firstName, lastName,googleId,selectedFile } = req.body;
 
   try {
     const oldUser = await UserModal.findOne({ email });
@@ -35,11 +35,36 @@ export const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const result = await UserModal.create({ email, password: hashedPassword, name: `${firstName} ${lastName}` });
+    const result = await UserModal.create({ email, password: hashedPassword, name: `${firstName} ${lastName}`,selectedFile:selectedFile ,googleId:googleId });
 
     const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
 
     res.status(201).json({ result, token });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+    
+    console.log(error);
+  }
+};
+export const googleSignUp = async (req, res) => {
+  const { email, password, firstName, lastName,googleId,selectedFile } = req.body;
+
+  try {
+    const oldUser = await UserModal.findOne({ email });
+
+    if (oldUser) {
+      const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" });
+      res.status(200).json({ result: oldUser, token });
+    }else{
+      const hashedPassword = await bcrypt.hash(password, 12);
+
+      const result = await UserModal.create({ email, password: hashedPassword, name: `${firstName}`,selectedFile:selectedFile ,googleId:googleId });
+
+      const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
+
+      res.status(201).json({ result, token });
+    }
+    
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
     

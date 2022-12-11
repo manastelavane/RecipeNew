@@ -63,8 +63,10 @@ const Navbar = () => {
                     {user?.result ? (
                     <div className={classes.profile}>
                         {/* <Avatar className={classes.purple} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar> */}
-                        <Avatar className={classes.purple} alt={user?.result.name} src={user?.result?.selectedFile}></Avatar>
-                        <Typography className="userName" variant="h6">{trimname(user?.result.name)}</Typography>
+                        
+                        <Avatar onClick={()=>navigate('/profile')} className={classes.purple} alt={user?.result.name} src={user?.result?.selectedFile}></Avatar>
+                        <Typography onClick={()=>navigate('/profile')} className="userName" variant="h6">{trimname(user?.result.name)}</Typography>
+                        
                         <Button variant="contained" className={classes.logout} color="secondary" size="small" onClick={logout}>Logout</Button>
                     </div>
                     ) : (

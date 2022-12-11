@@ -126,6 +126,7 @@
     margin:0px 8px;
     padding: 0 5px;
     color: white !important;
+    cursor: pointer;
 }
 .scrolling .userName{
     color: black !important;
