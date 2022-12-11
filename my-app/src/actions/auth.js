@@ -24,3 +24,15 @@ export const signup = (formData, navigate) => async (dispatch) => {
     console.log(error);
   }
 };
+export const googlesignin = (result,token, navigate) => async (dispatch) => {
+  try {
+    let formData={ firstName: result?.name, lastName: '', email: result?.email, password: 'google', confirmPassword: 'google',selectedFile: result?.imageUrl,googleId:result?.googleId }
+    const { data } = await api.googleSignUp(formData);
+
+    dispatch({ type: AUTH, data });
+
+    navigate('/');
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -33,6 +33,7 @@ const Navbar = () => {
     
         setUser(null);
       };
+      console.log(user)
     window.addEventListener('scroll',handlescroll);
     function trimname(name){
         var i=name.indexOf(' ');
@@ -61,7 +62,8 @@ const Navbar = () => {
                 <Toolbar className={classes.toolbar}>
                     {user?.result ? (
                     <div className={classes.profile}>
-                        <Avatar className={classes.purple} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
+                        {/* <Avatar className={classes.purple} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar> */}
+                        <Avatar className={classes.purple} alt={user?.result.name} src={user?.result?.selectedFile}></Avatar>
                         <Typography className="userName" variant="h6">{trimname(user?.result.name)}</Typography>
                         <Button variant="contained" className={classes.logout} color="secondary" size="small" onClick={logout}>Logout</Button>
                     </div>

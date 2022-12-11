@@ -24,3 +24,4 @@ export const fetchCardsBySearch = (searchQuery) => API.get(`/searchh?Keywords=${
 
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
+export const googleSignUp = (formData) => API.post('/googleSignUp', formData);

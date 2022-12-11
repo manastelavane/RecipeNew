@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {IoArrowBackSharp} from 'react-icons/io5'
-
+import FileBase from 'react-file-base64';
 import Icon from './icon';
-import { signin, signup } from '../../actions/auth';
+import { signin, signup,googlesignin } from '../../actions/auth';
 import { AUTH } from '../../constants/actionTypes';
 import useStyles from './AuthStyles';
 import Input from './Input';
 
-const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
+const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '',selectedFile: '',googleId:'' };
 
 const SignUp = () => {
   const [form, setForm] = useState(initialState);
@@ -40,14 +40,15 @@ const SignUp = () => {
     }
   };
 
-  const googleSuccess = async (res) => {
+  const googleSuccess =  (res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
-
+    console.log("fresult",result)
+    console.log("t",token)
     try {
-      dispatch({ type: AUTH, data: { result, token } });
-
-      navigate('/');
+      dispatch(googlesignin(result,token,navigate))
+      // dispatch({ type: AUTH, data: { result, token } });
+      // navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +80,8 @@ const SignUp = () => {
             <Input name="email" label="Email Address" handleChange={handleChange} type="email" />
             <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
             { isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> }
+            { isSignup && <FileBase type="file" multiple={false} onDone={({ base64 }) => setForm({ ...form, selectedFile: base64 })} /> }
+
           </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             { isSignup ? 'Sign Up' : 'Sign In' }
