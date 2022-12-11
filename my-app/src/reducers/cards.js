@@ -1,6 +1,6 @@
-import { FETCH_ALL,FETCH_CARD,START_LOADING,END_LOADING,NEW_COMMENT_REQUEST,NEW_COMMENT_SUCCESS,NEW_COMMENT_FAIL } from '../constants/actionTypes';
+import { FETCH_ALL,FETCH_CARD,START_LOADING,END_LOADING,NEW_COMMENT_REQUEST,NEW_COMMENT_SUCCESS,NEW_COMMENT_FAIL,FETCH_BY_SEARCH } from '../constants/actionTypes';
 
-export const cards=(state = {isLoading:true,cards:[]}, action) => {
+export const cards=(state = {isLoading:true,cards:[],recommend:[]}, action) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true }
@@ -11,6 +11,8 @@ export const cards=(state = {isLoading:true,cards:[]}, action) => {
         numberOfPages: action.payload.numberOfPages};
     case FETCH_CARD:
       return { ...state, card: action.payload.card };
+    case FETCH_BY_SEARCH:
+      return { ...state, recommend: action.payload.data };
     default:
       return state;
   }

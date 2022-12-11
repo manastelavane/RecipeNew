@@ -14,7 +14,7 @@ API.interceptors.request.use((req) => {
 export const fetchCards = (category,page) => API.get(`/card?category=${category}&page=${page}`);
 export const fetchCard = (id) => API.get(`/card/${id}`);
 export const postComment = (reviewData,config) => API.put(`/card/review`,reviewData,config);
-
+export const fetchCardsBySearch = (searchQuery) => API.get(`/searchh?Keywords=${searchQuery.Keywords}&category=${searchQuery.category}`);
 // export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
 // export const createPost = (newPost) => API.post('/posts', newPost);
 // export const likePost = (id) => API.patch(`/posts/${id}/likePost`);

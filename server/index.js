@@ -40,3 +40,64 @@ mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnified
       return res.json(error.message)
     }
   })
+  app.get('/searchh', async (req, res) => {
+    const { Keywords,category } = req.query;
+    var array = Keywords.split(',');
+    console.log("server",Keywords)
+    console.log("arr",array);
+    console.log(category)
+    if(array===null){
+      res.json({data:null });
+      return;
+    } 
+    try {
+        // const title = new RegExp(searchQuery, "i");
+        const cards = await SortRec.aggregate([
+          {
+            "$set": {
+              "interSize": {
+                "$size": {
+                  "$setIntersection": [
+                    "$RecipeIngredientParts",
+                    // your ingredients/tags/etc. go here
+                    array
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$sort": {
+            "interSize": -1
+          }
+        },
+        {
+          "$limit": 6
+        }
+        ])
+        // console.log("start")
+        // cards.map((card)=>{
+        //     console.log(card.Name)
+        // })
+        console.log("cards");
+        res.json({data:cards });
+    } catch (error) {    
+        res.status(404).json({ message: error.message });
+    }
+  })
+  // app.get('/searchh', async (req, res) => {
+  //   const { Keywords } = req.query;
+  //   console.log("server",Keywords)
+  //   try {
+  //       // const title = new RegExp(searchQuery, "i");
+  //       const cards = await SortRec.find({  Keywords: { $in: Keywords.split(',') } }).sort({AggregatedRating:-1,}).limit(4);
+  //       console.log("start")
+  //       cards.map((card)=>{
+  //           console.log(card.Name)
+  //       })
+        
+  //       res.json({data:cards });
+  //   } catch (error) {    
+  //       res.status(404).json({ message: error.message });
+  //   }
+  // })

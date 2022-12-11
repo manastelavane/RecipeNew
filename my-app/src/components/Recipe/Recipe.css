@@ -351,3 +351,10 @@ li{
     color: rgba(0, 0, 0, 0.548);
     margin-bottom: 15px;
   }
+  .recommended{
+    margin: 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+  }

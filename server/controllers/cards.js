@@ -34,7 +34,7 @@ export const getCards = async (req, res) => {
 }
 export const getCard = async (req, res) => { 
     const { id } = req.params;
-    console.log(id)
+    // console.log(id)
     try {
         const card = await SortRec.findById(id);
         // console.log(card)
@@ -58,9 +58,9 @@ export const createCard = async (req, res) => {
 }
 export const createCardComment = async (req, res) => {
     const { rating, comment, CardId,UserId,UserName } = req.body;
-    console.log("cardid",CardId)
-    console.log("req",UserId)
-    console.log(rating,comment,CardId)
+    // console.log("cardid",CardId)
+    // console.log("req",UserId)
+    // console.log(rating,comment,CardId)
     const review = {
       user: UserId,
       name:UserName,
@@ -74,7 +74,7 @@ export const createCardComment = async (req, res) => {
     const isReviewed = card.Comments.find(
       (rev) => rev?.user?.toString() === UserId.toString()
     );
-    console.log(UserId._id)
+    // console.log(UserId._id)
   
     if (isReviewed) {
       card.Comments.forEach((rev) => {
@@ -101,19 +101,21 @@ export const createCardComment = async (req, res) => {
     });
   };
 
-// export const getCardsBySearch = async (req, res) => {
-//     // const { searchQuery, tags } = req.query;
-
-//     // try {
-//     //     const title = new RegExp(searchQuery, "i");
-
-//     //     const posts = await Neww.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]});
-
-//     //     res.json({ data: posts });
-//     // } catch (error) {    
-//     //     res.status(404).json({ message: error.message });
-//     // }
-// }
+export const getCardsBySearch = async (req, res) => {
+    console.log("serverrr")
+    const { Keywords } = req.query;
+    console.log("server",Keywords)
+    try {
+        // const title = new RegExp(searchQuery, "i");
+        const cards = await SortRec.find({  Keywords: { $in: Keywords.split(',') } }).limit(4);
+        // cards.map((card)=>{
+        //     console.log(card.Name)
+        // })
+        res.json({data:cards });
+    } catch (error) {    
+        res.status(404).json({ message: error.message });
+    }
+}
 
 // export const getCard = async (req, res) => { 
 //     // const { id } = req.params;

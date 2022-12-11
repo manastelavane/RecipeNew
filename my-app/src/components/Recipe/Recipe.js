@@ -8,7 +8,7 @@ import VideoDetail from '../Video/VideoDetail'
 import VideoList from '../Video/VideoList'
 import useVideos from '../Video/hooks/useVideos';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCard,newComment } from '../../actions/cards';
+import { getCard,newComment,getCardsBySearch } from '../../actions/cards';
 import Navbar from '../Navbar/Navbar';
 import { TextField,Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
@@ -21,6 +21,7 @@ import {
     Button,
   } from "@material-ui/core";
 import CommentsCard from './CommentsCard.js';
+import ActionAreaCard from '../Card/Card';
 //   import { Rating } from "@material-ui/lab";
 const Recipe = () => {
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -41,11 +42,19 @@ const Recipe = () => {
     //     ProteinsContent:434,
     //     FatContent:343
     // }
-    const { card,isLoading } = useSelector((state) => state.cards);
+    const { card,isLoading,recommend} = useSelector((state) => state.cards);
+    
     const { success, error: reviewError } = useSelector((state) => state.newCommentReducer);
+    console.log(card?.Keywords.join(','))
     useEffect(() => {
         dispatch(getCard(id));
       }, [id,dispatch,success,reviewError]);
+    useEffect(() => {
+        if(card){
+            dispatch(getCardsBySearch({ Keywords: card?.RecipeIngredientParts.join(',') ,category:card?.RecipeCategory}));
+        }
+      }, [card]);
+
     //   useEffect(()=>{
     //     setSelectedVideo(videos?.length===0?null:videos[0]);
     //   },[search,dispatch])
@@ -100,7 +109,7 @@ const Recipe = () => {
       const submitCommentToggle = () => {
         open ? setOpen(false) : setOpen(true);
       };
-    
+    console.log("rec",recommend)
     //   const reviewSubmitHandler = () => {
     //     const myForm = new FormData();
     
@@ -112,7 +121,8 @@ const Recipe = () => {
     
     //     setOpen(false);
     //   };
-      
+    let recommendedCards = recommend.filter(({ _id }) => _id !== card._id);
+    recommendedCards=recommendedCards.slice(0, Math.min(4,recommendedCards.length));
   return (
     <>
     <Navbar/>
@@ -263,7 +273,7 @@ const Recipe = () => {
       <div className='myreview-button'>
 
       <button onClick={submitCommentToggle} className="submitReview">
-                Comment
+                Your Comment
               </button>
       </div>
       <h3 className="commentsHeading">Comments</h3>
@@ -309,7 +319,16 @@ const Recipe = () => {
           ) : (
             <p className="noComments">No Comments Yet</p>
           )}
-    {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, repudiandae! Deserunt quam, fuga iusto nemo dolorum rerum accusantium ipsum. Saepe sapiente natus delectus ducimus eos vel vitae? Ullam ipsa voluptatem distinctio excepturi itaque in consectetur minima error eum exercitationem alias fuga similique, hic at, dolorem odit unde dolore eveniet minus obcaecati delectus autem. Ipsum accusamus distinctio molestias officiis aliquid sint amet nam molestiae! Eum porro, fugit molestias alias sint iste inventore nobis quam esse unde illo vitae aspernatur ad, laboriosam eaque? Aliquid quo sit, totam explicabo voluptas saepe a repellendus aliquam eum alias tempore provident, inventore harum ea beatae, ratione sequi. Enim non, error nam voluptatum temporibus optio quod fugiat ad ex saepe eligendi dignissimos nobis illo, quo animi odio dolores id. Quisquam recusandae ducimus necessitatibus maxime nostrum blanditiis illo perferendis sint quidem, ex at! Recusandae amet excepturi tempora molestias adipisci assumenda nisi quisquam! Tempora saepe reprehenderit iusto ea voluptate reiciendis voluptas quaerat eius unde quia expedita ipsum deserunt consequatur repellendus, animi quos. Corporis earum delectus quae odio laudantium magnam fuga quia esse, est ullam nihil veniam tempora id reiciendis ipsum aliquid omnis velit minus non eaque dolores maiores inventore quam. Nesciunt quae ipsam repellat sint adipisci doloremque veniam? Voluptatibus? */}
+            <div className='recommended'>
+                <Typography variant="h4">Recommendation :</Typography>
+                <div className='card-container'>
+                {
+                    (recommendedCards.length>0) && recommendedCards?.map((rec,i)=>(
+                      <ActionAreaCard card={rec} key={rec._id} />
+                    ))
+                }
+                </div>
+            </div>
            </div>
     </section>
     </>
