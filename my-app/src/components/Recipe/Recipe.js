@@ -4,9 +4,9 @@ import './Recipe.css'
 import { Rating } from '@mui/material';
 import {BiTimer} from 'react-icons/bi'
 import { Doughnut} from "react-chartjs-2";
-import VideoDetail from '../Video/VideoDetail'
-import VideoList from '../Video/VideoList'
-import useVideos from '../Video/hooks/useVideos';
+// import VideoDetail from '../Video/VideoDetail'
+// import VideoList from '../Video/VideoList'
+// import useVideos from '../Video/hooks/useVideos';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCard,newComment,getCardsBySearch } from '../../actions/cards';
 import Navbar from '../Navbar/Navbar';
@@ -53,7 +53,7 @@ const Recipe = () => {
         if(card){
             dispatch(getCardsBySearch({ Keywords: card?.RecipeIngredientParts.join(',') ,category:card?.RecipeCategory}));
         }
-      }, [card]);
+      }, [dispatch,card]);
 
     //   useEffect(()=>{
     //     setSelectedVideo(videos?.length===0?null:videos[0]);

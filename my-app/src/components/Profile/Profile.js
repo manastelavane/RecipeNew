@@ -15,6 +15,7 @@ const Profile = () => {
     }
   }, [navigate, user]);
   return (
+    <>
     <div className="container">
         <div className='back' title="Back" onClick={()=>navigate('/')}>
        <IoArrowBackSharp/> 
@@ -25,7 +26,7 @@ const Profile = () => {
               <img src={user?.result?.selectedFile} alt={user?.result?.name} />
               
             </div>
-            <div>
+            <div className="info">
               <div>
                 <h4>Full Name</h4>
                 <p>{user?.result?.name}</p>
@@ -37,10 +38,12 @@ const Profile = () => {
             </div>
           </div>
             <Link className="link" to="/me/update">Edit Profile</Link>
+            </div>
             <h1 className="border"></h1>
             <br/>
             <h4>No Recipes Contributed by you yet...</h4>
-        </div>
+        
+        </>
   );
 };
 
