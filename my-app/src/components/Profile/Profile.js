@@ -41,7 +41,7 @@ const Profile = () => {
             </div>
             <h1 className="border"></h1>
             <br/>
-            <h4>No Recipes Contributed by you yet...</h4>
+            <h4 style={{textAlign:'center'}}>No Recipes Contributed by you yet...</h4>
         
         </>
   );

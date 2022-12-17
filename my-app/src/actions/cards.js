@@ -7,7 +7,7 @@
  * @return {Promise<string>} The data from the URL.
  */
 
-import { FETCH_ALL,FETCH_CARD,START_LOADING,END_LOADING,NEW_COMMENT_REQUEST,NEW_COMMENT_SUCCESS,NEW_COMMENT_FAIL,FETCH_BY_SEARCH} from '../constants/actionTypes';
+import { FETCH_ALL,FETCH_CARD,FETCH_NEW_ALL,START_LOADING,END_LOADING,NEW_COMMENT_REQUEST,NEW_COMMENT_SUCCESS,NEW_COMMENT_FAIL,FETCH_BY_SEARCH} from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
 export const getCards = (category,page) => async (dispatch) => {
@@ -16,6 +16,17 @@ export const getCards = (category,page) => async (dispatch) => {
     const { data :{data,currentPage, numberOfPages}} = await api.fetchCards(category,page);
     // console.log("data1",data);
     dispatch({ type: FETCH_ALL, payload:{data ,currentPage, numberOfPages}});
+    dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getNewCards = (page) => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const { data :{data,currentPage, numberOfPages}} = await api.fetchNewCards(page);
+    // console.log("data1",data);
+    dispatch({ type: FETCH_NEW_ALL, payload:{data ,currentPage, numberOfPages}});
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
@@ -51,7 +62,7 @@ export const newComment = (reviewData) => async (dispatch) => {
     console.log(error);
   }
 };
-export const getCardsBySearch = (searchQuery) => async (dispatch) => {
+export const getRecommendSearch = (searchQuery) => async (dispatch) => {
   try {
     // dispatch({ type: START_LOADING });
     // // console.log("searchquery",searchQuery.Keywords);
@@ -63,7 +74,7 @@ export const getCardsBySearch = (searchQuery) => async (dispatch) => {
     // dispatch({ type: END_LOADING });
     dispatch({ type: START_LOADING });
     // console.log("hello")
-    const { data :{data}} = await api.fetchCardsBySearch(searchQuery);
+    const { data :{data}} = await api.getRecommendSearch(searchQuery);
     // console.log("data1",data);
     dispatch({ type: FETCH_BY_SEARCH, payload:{data}});
     dispatch({ type: END_LOADING });

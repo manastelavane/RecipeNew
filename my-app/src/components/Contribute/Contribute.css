@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     /* align-items: center; */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1)), url("../../images/dessert.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../../images/dessert.jpg");
     height: 62vh;
     background-position: center;
     background-repeat: no-repeat;
@@ -76,7 +76,7 @@ form{
     width: auto;
 }
 
-.MuiFormControl-root{
+span>.MuiFormControl-root{
     margin: 10px!important;   
 }   
 .textfield .MuiFormControl-root{

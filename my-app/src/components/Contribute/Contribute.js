@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, Fragment} from 'react'
 import { Grid,TextField,Button,IconButton} from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete';
 import Navbar from '../Navbar/Navbar'
@@ -41,9 +41,25 @@ const Contribute = () => {
     
         setForm({...form,stepsinfo:[...form.stepsinfo, newfield]})
     }
+    const removeIngreFields = (index) => {
+      let data = [...form.ingredientsinfo];
+      data.splice(index, 1)
+      setForm({...form,ingredientsinfo:data})
+  }
+  const removeStepsFields = (index) => {
+    console.log(index)
+    console.log(form.stepsinfo)
+    let data = [...form.stepsinfo];
+    data.splice(index, 1)
+    setForm({...form,stepsinfo:data})
+}
+const submit = (e) => {
+  e.preventDefault();
+  console.log("form",form)
+}
       useEffect(()=>{
         console.log(form)
-      },[form])
+      },[form,form.stepsinfo.length])
   return (
     <div className='contribute'>
         <Navbar/>
@@ -55,7 +71,7 @@ const Contribute = () => {
       <div className='contribute-form-container'>
         <div className='form-container'>
             <h1 className='recipe-detail-heading'>Recipe Details</h1>
-            <form  onSubmit={()=>{}}>
+            <form  onSubmit={submit}>
                 <Grid container spacing={2}>
                     <Input name="recipeName" label="Recipe Name" handleChange={handleChange} fullWidth/>
                     <Input name="recipeDescription" multiline label="Recipe Description" handleChange={handleChange}  fullWidth/>
@@ -133,7 +149,7 @@ const Contribute = () => {
                                     <Input type="text" className="" name="unit" label="Unit" handleChange={event => handleIngreFormChange(event, index)}/>
                                     <Input type="text" className="" name="ingredient" label="Ingredient" handleChange={event => handleIngreFormChange(event, index)}/>
                                     
-                                    <IconButton aria-label="delete" size="small">
+                                    <IconButton aria-label="delete" size="small"onClick={() => removeIngreFields(index)}>
                                       <DeleteIcon fontSize="small" />
                                     </IconButton>
                                     </Stack>
@@ -149,30 +165,36 @@ const Contribute = () => {
                         <br/>
                         <h4>Steps : </h4>
                     <br/>
+                    <Grid container columnSpacing={2} alignItems="center">
                         {form.stepsinfo.map((input, index) => {
                             return (
-                                <Grid container spacing={1} alignItems="center">
-                                {/* <div> */}
+                              
+                                <Fragment key={index}>
                                   <Grid item xs={11}>
                                     <Input type="text" className="" name="stepsinfoindi" label="Step" handleChange={event => handleStepsFormChange(event, index)} fullWidth />
                                     </Grid>
                                     <Grid item xs={1}>
-                                    <IconButton aria-label="delete" size="small">
+                                    <IconButton aria-label="delete" size="small" onClick={()=>removeStepsFields(index)}>
                                       <DeleteIcon fontSize="small" />
                                     </IconButton>
                                     </Grid>
-                                </Grid>
-                                // </div>
-                                // </div>   
-                            )
-                        })}
+                                {/* // </div> */}
+                                {/* // </div> */}
+                                </Fragment>   
+                                ) 
+                              })}
+                              </Grid>
                         
                         <Button size="small" color="inherit" onClick={addStepsFields} variant="contained">
                         Add Steps +
                         </Button>
                     {/* </div> */}
                 </Grid>
-                <button type="submit">Submit</button>
+                <br/>
+                <br/>
+                <Button type="submit" size="large" color="primary" fullWidth variant="contained">
+                  Submit
+                </Button>
             </form>
         </div>
       </div>

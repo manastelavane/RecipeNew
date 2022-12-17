@@ -12,6 +12,7 @@ import Profile from './components/Profile/Profile';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import Contribute from './components/Contribute/Contribute';
+import New from './components/New/New';
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
   // console.log(user)
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/auth" exact element={<Auth />} />
           <Route path="/recipe/:id" element={<Recipe />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/new" element={<New />} />
           <Route path="/contribute" element={<Contribute />} />
           {/* <Route path="/:category" element={<Home category=category />} /> */}
           {/* <Route path="/auth" exact element={() => ((!user || user.length===0) ? <Auth /> : navigate('/'))} /> */}

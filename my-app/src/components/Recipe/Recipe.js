@@ -8,7 +8,7 @@ import { Doughnut} from "react-chartjs-2";
 // import VideoList from '../Video/VideoList'
 // import useVideos from '../Video/hooks/useVideos';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCard,newComment,getCardsBySearch } from '../../actions/cards';
+import { getCard,newComment,getRecommendSearch } from '../../actions/cards';
 import Navbar from '../Navbar/Navbar';
 import { TextField,Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
@@ -51,7 +51,7 @@ const Recipe = () => {
       }, [id,dispatch,success,reviewError]);
     useEffect(() => {
         if(card){
-            dispatch(getCardsBySearch({ Keywords: card?.RecipeIngredientParts.join(',') ,category:card?.RecipeCategory}));
+            dispatch(getRecommendSearch({ Keywords: card?.RecipeIngredientParts.join(',') ,category:card?.RecipeCategory}));
         }
       }, [dispatch,card]);
 
@@ -184,7 +184,7 @@ const Recipe = () => {
                             </ul>
                         </div>
                         <div className='two-container-content-header'>
-                            <h1 className='header__header'>{card?.Name}</h1>
+                            <h1 style={{color:"black"}} className='header__header'>{card?.Name}</h1>
                             
                             <div className='header__rating'>
                                 <div className='header__rating'>

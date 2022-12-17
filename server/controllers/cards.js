@@ -32,6 +32,28 @@ export const getCards = async (req, res) => {
         res.status(404).json({ message: error });
     }
 }
+export const getNewCards = async (req, res) => { 
+    try {
+        // console.log(req.query);
+        const {page}=req.query;
+        // console.log("i got",category,page);
+        const LIMIT = 10;
+        const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
+    
+        const total = await SortRec.countDocuments();
+        // console.log(category1)
+        console.log(total)
+        const cardMessages = await SortRec.find().sort({DatePublished:-1}).limit(LIMIT).skip(startIndex);
+        // console.log(postMessages.length)  
+        // console.log(productsCount)
+        // console.log(category);
+        // console.log(Number(page));
+        // console.log(Math.ceil(total / LIMIT));
+        res.status(200).json({data:cardMessages, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
+    } catch (error) {
+        res.status(404).json({ message: error });
+    }
+}
 export const getCard = async (req, res) => { 
     const { id } = req.params;
     // console.log(id)
@@ -116,91 +138,69 @@ export const getCardsBySearch = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
+export const autocompletesearch = async (req, res) => {
+  try {
+    const { name } = req.query
 
-// export const getCard = async (req, res) => { 
-//     // const { id } = req.params;
+    const agg = [
+      {$search: {autocomplete: {query: name, path: "Name"}}},
+      {$limit: 10},
+      {$project: {_id: 1,Name: 1}}
+  ];
+    const response = await SortRec.aggregate(agg)
 
-//     // try {
-//     //     const post = await Apple.findById(id);
-//         c
-//     //     res.status(200).json(post);
-//     // } catch (error) {
-//     //     res.status(404).json({ message: error.message });
-//     // }
-// }   
+    return res.json(response)
+  } catch (error) {
+    console.log("error",error)
+    return res.json(error.message)
+  }
+}
+export const getRecommendSearch = async (req, res) => {
+  const { Keywords,category } = req.query;
+  var array = Keywords.split(',');
+  console.log("server",Keywords)
+  console.log("arr",array);
+  console.log(category)
+  if(array===null){
+    res.json({data:null });
+    return;
+  } 
+  try {
+      // const title = new RegExp(searchQuery, "i");
+      const cards = await SortRec.aggregate([
+        {
+          "$set": {
+            "interSize": {
+              "$size": {
+                "$setIntersection": [
+                  "$RecipeIngredientParts",
+                  // your ingredients/tags/etc. go here
+                  array
+              ]
+            }
+          }
+        }
+      },
+      {
+        "$sort": {
+          "interSize": -1
+        }
+      },
+      {
+        "$limit": 6
+      }
+      ])
+      // console.log("start")
+      // cards.map((card)=>{
+      //     console.log(card.Name)
+      // })
+      console.log("cards");
+      res.json({data:cards });
+  } catch (error) {    
+      res.status(404).json({ message: error.message });
+  }
+}
 
-// export const createCard = async (req, res) => {
-//     // const post = req.body;
 
-//     // const newApple = new Apple({ ...post, creator: req.userId, createdAt: new Date().toISOString() })
-
-//     // try {
-//     //     await newApple.save();
-
-//     //     res.status(201).json(newApple);
-//     // } catch (error) {
-//     //     res.status(409).json({ message: error.message });
-//     // }
-// }
-
-// export const updateCard = async (req, res) => {
-//     // const { id } = req.params;
-//     // const { title, message, creator, selectedFile, tags } = req.body;
-    
-//     // if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-
-//     // const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
-
-//     // await Apple.findByIdAndUpdate(id, updatedPost, { new: true });
-
-//     // res.json(updatedPost);
-// }
-
-// export const deleteCard = async (req, res) => {
-//     // const { id } = req.params;
-
-//     // if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-
-//     // await Apple.findByIdAndRemove(id);
-
-//     // res.json({ message: "Post deleted successfully." });
-// }
-
-// export const likeCard = async (req, res) => {
-//     // const { id } = req.params;
-
-//     // if (!req.userId) {
-//     //     return res.json({ message: "Unauthenticated" });
-//     //   }
-
-//     // if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-    
-//     // const post = await Apple.findById(id);
-
-//     // const index = post.likes.findIndex((id) => id ===String(req.userId));
-
-//     // if (index === -1) {
-//     //   post.likes.push(req.userId);
-//     // } else {
-//     //   post.likes = post.likes.filter((id) => id !== String(req.userId));
-//     // }
-
-//     // const updatedPost = await Apple.findByIdAndUpdate(id, post, { new: true });
-
-//     // res.status(200).json(updatedPost);
-// }
-
-// export const commentCard = async (req, res) => {
-//     // const { id } = req.params;
-//     // const { value } = req.body;
-
-//     // const post = await Apple.findById(id);
-
-//     // post.comments.push(value);
-
-//     // const updatedPost = await Apple.findByIdAndUpdate(id, post, { new: true });
-
-//     // res.json(updatedPost);
-// };
 
 export default router;

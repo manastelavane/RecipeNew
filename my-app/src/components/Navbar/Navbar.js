@@ -20,7 +20,7 @@ const Navbar = () => {
     }
     const classes = useStyles();
     const handlescroll=()=>{
-        if(window.pageYOffset<=100){
+        if(window.pageYOffset<=50){
             setScrolling(false)
         }else{
             setScrolling(true)

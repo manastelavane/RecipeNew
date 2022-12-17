@@ -11,7 +11,7 @@ export const START_LOADING = 'START_LOADING';
 export const NEW_COMMENT_REQUEST='NEW_COMMENT_REQUEST'
 export const NEW_COMMENT_SUCCESS='NEW_COMMENT_SUCCESS'
 export const NEW_COMMENT_FAIL='NEW_COMMENT_FAIL'
-
+export const FETCH_NEW_ALL='FETCH_NEW_ALL'
 
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';

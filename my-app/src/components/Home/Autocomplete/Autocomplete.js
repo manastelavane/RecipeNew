@@ -34,16 +34,12 @@ const Autocomplete = () => {
 	// }, [queryText])
     const onChangeone=async(e)=>{
         if(e.target.value){
-            const url = 'http://localhost:5000/search'
+            const url = 'http://localhost:5000/card/autocompletesearch'
             const { data } = await axios.get(url, {
                     params: {
                         name: e.target.value,
                     },
                 })
-                // var newdata=[]
-                // for(var i in data){
-                //     newdata.push(data[i].Name)
-                // }
              setSearchResults(data)   
         }
     }
