@@ -13,6 +13,7 @@ import ActionAreaCard from '../Card/Card'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Navbar from '../Navbar/Navbar'
+import LoaderSmall from '../Loader/LoaderSmall';
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -147,7 +148,7 @@ const Home = () => {
       />
       </div>
       <div className='card-container'>
-        {isLoading?(<>Loading</>):(<>{cards &&
+        {isLoading?(<LoaderSmall/>):(<>{cards &&
               cards.map((card) => (
                 <ActionAreaCard card={card} key={card._id} />
               ))

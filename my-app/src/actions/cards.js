@@ -62,24 +62,15 @@ export const newComment = (reviewData) => async (dispatch) => {
     console.log(error);
   }
 };
+
 export const getRecommendSearch = (searchQuery) => async (dispatch) => {
   try {
-    // dispatch({ type: START_LOADING });
-    // // console.log("searchquery",searchQuery.Keywords);
-    // // const { data:{data} } = await api.fetchCardsBySearch(searchQuery);
-    // const {data} = await api.fetchCardsBySearch(searchQuery);
-    // // const json = await response.json();
-    // console.log("data",data)
-    // dispatch({ type: FETCH_BY_SEARCH, payload:  data  });
-    // dispatch({ type: END_LOADING });
     dispatch({ type: START_LOADING });
-    // console.log("hello")
     const { data :{data}} = await api.getRecommendSearch(searchQuery);
-    // console.log("data1",data);
     dispatch({ type: FETCH_BY_SEARCH, payload:{data}});
     dispatch({ type: END_LOADING });
-    // return json;
   } catch (error) {
     console.log(error);
   }
 };
+

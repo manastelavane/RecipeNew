@@ -13,6 +13,8 @@ import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import Contribute from './components/Contribute/Contribute';
 import New from './components/New/New';
+import Loader from './components/Loader/Loader';
+import LoaderSmall from './components/Loader/LoaderSmall';
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
   // console.log(user)
