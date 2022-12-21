@@ -11,7 +11,7 @@ const CommentsCard = ({ comment }) => {
 
   return (
     <div className="commentCard">
-      {/* <img src={profilePng} alt="User" /> */}
+      {/* <img src={} alt="User" /> */}
       <p>{comment?.name}</p>
       <Rating {...options} />
       <span className="commmentCardComment">{comment.comment}</span>

@@ -19,6 +19,7 @@ function useQuery() {
 }
 const Home = () => {
   const query = useQuery();
+  const ref = React.createRef();
   const page = query.get('page') || 1;
   const options = ['All','< 15 Mins', '< 30 Mins', '< 4 Hours', '< 60 Mins', 'Apple', 'Asian', 'Australian', 'Bar Cookie', 'Beans', 'Berries', 'Beverages', 'Black Beans', 'Breads', 'Breakfast', 'Brown Rice', 'Brunch', 'Cajun', 'Canadian', 'Candy', 'Cauliflower', 'Cheese', 'Cheesecake', 'Chicken', 'Chicken Breast', 'Chicken Thigh & Leg', 'Chinese', 'Chowders', 'Christmas', 'Chutneys', 'Clear Soup', 'Corn', 'Crab', 'Curries', 'Dessert', 'Drop Cookies', 'European', 'For Large Groups', 'Frozen Desserts', 'Fruit', 'Gelatin', 'Grains', 'Greek', 'Greens', 'Gumbo', 'Halibut', 'Ham', 'Healthy', 'High Protein', 'Japanese', 'Jellies', 'Kid Friendly', 'Lactose Free', 'Lamb/Sheep', 'Lemon', 'Lentil', 'Long Grain Rice', 'Low Cholesterol', 'Low Protein', 'Lunch/Snacks', 'Mango', 'Meat', 'Meatballs', 'Meatloaf', 'Mexican', 'Nuts', 'One Dish Meal', 'Onions', 'Oranges', 'Pasta Shells', 'Penne', 'Peppers', 'Pie', 'Pineapple', 'Pork', 'Potato', 'Potluck', 'Poultry', 'Punch Beverage', 'Quick Breads', 'Rice', 'Roast Beef', 'Salad Dressings', 'Sauces', 'Savory', 'Savory Pies', 'Scones', 'Shakes', 'Short Grain Rice', 'Smoothies', 'Sourdough Breads', 'Southwest Asia (middle East)', 'Soy/Tofu', 'Spaghetti', 'Spinach', 'Spreads', 'Steak', 'Stew', 'Stocks', 'Strawberry', 'Summer', 'Tarts', 'Thai', 'Tilapia', 'Tuna', 'Veal', 'Vegan', 'Vegetable', 'Very Low Carbs', 'Weeknight', 'White Rice', 'Whole Chicken', 'Yam/Sweet Potato', 'Yeast Breads']
   const [inputValue, setInputValue] = useState(options[0]);
@@ -32,12 +33,16 @@ const Home = () => {
   },[])
   useEffect(() => {
     dispatch(getCards(category,page));
+    ref.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }, [ dispatch,page]);
   useEffect(() => {
     dispatch(getCards(category,1))
     navigate(`/card?category=${category}&page=1`);
   }, [ dispatch,category,navigate]);
-  console.log(numberOfPages)
+  // console.log(numberOfPages)
   // console.log("card",cards)
   // console.log("Hi")
   return (
@@ -129,7 +134,7 @@ const Home = () => {
         </div>
       <i className="fa-solid fa-arrow-right"></i>
       </div> */}
-      <div className="autocomplete-div">
+      <div className="autocomplete-div" ref={ref}>
       <Autocomplete
       className='autocomplete'
         value={category}

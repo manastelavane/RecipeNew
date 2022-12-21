@@ -34,6 +34,7 @@ const SignUp = () => {
     e.preventDefault();
 
     if (isSignup) {
+      // console.log(form)
       dispatch(signup(form, navigate));
     } else {
       dispatch(signin(form, navigate));
@@ -43,8 +44,8 @@ const SignUp = () => {
   const googleSuccess =  (res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
-    console.log("fresult",result)
-    console.log("t",token)
+    // console.log("fresult",result)
+    // console.log("t",token)
     try {
       dispatch(googlesignin(result,token,navigate))
       // dispatch({ type: AUTH, data: { result, token } });

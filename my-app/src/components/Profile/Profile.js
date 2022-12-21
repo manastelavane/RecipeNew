@@ -21,24 +21,32 @@ import { useTheme } from '@mui/material/styles';
 import { useDispatch,useSelector } from "react-redux";
 
 const Profile = () => {
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
   const {authData} = useSelector((state) => state.auth);
-    
+    useEffect(()=>{
+      if(authData){
+        setUser(authData)
+      }else{
+        setUser(JSON.parse(localStorage.getItem('profile')))
+      }
+    },[authData])
     const [open,setOpen]=useState(false)
     const navigate=useNavigate();
     const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-    console.log(authData)
-    const [profile,setProfile]=useState({name:authData?.result?.name,selectedFile:authData?.result?.selectedFile,id:authData?.result?._id})
-    console.log(profile)
+    // console.log(authData)
+    const [profile,setProfile]=useState({name:user?.result?.name,selectedFile:user?.result?.selectedFile,id:user?.result?._id})
+    // console.log(profile)
     const dispatch=useDispatch()
    useEffect(()=>{
     navigate('/profile')
-   },[authData])
+   },[user])
   useEffect(() => {
-    if (!authData) {
+    if (!user) {
       navigate('/auth');
     }
-  }, [navigate, authData]);
+  }, [navigate, user]);
 
   const dialogToggle=()=>{
     setOpen(!open)
@@ -56,17 +64,17 @@ const Profile = () => {
               <h1>My Profile</h1>
           <div className="profileContainer">
             <div>
-              <img src={authData?.result?.selectedFile} alt={authData?.result?.name} />
+              <img src={user?.result?.selectedFile} alt={user?.result?.name} />
               
             </div>
             <div className="info">
               <div>
                 <h4>Full Name</h4>
-                <p>{authData?.result?.name}</p>
+                <p>{user?.result?.name}</p>
               </div>
               <div>
                 <h4>Email</h4>
-                <p>{authData?.result?.email}</p>
+                <p>{user?.result?.email}</p>
               </div>
             </div>
           </div>

@@ -20,6 +20,9 @@ const New = () => {
         dispatch(getNewCards(page))
         navigate(`/new?page=1`);
     },[dispatch,navigate])
+    useEffect(() => {
+      window.scrollTo(0, 0)
+    }, [])
   return (
     <div>
         {isLoading?(<Loader/>):(

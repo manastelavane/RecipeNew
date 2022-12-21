@@ -158,9 +158,9 @@ export const autocompletesearch = async (req, res) => {
 export const getRecommendSearch = async (req, res) => {
   const { Keywords,category } = req.query;
   var array = Keywords.split(',');
-  console.log("server",Keywords)
-  console.log("arr",array);
-  console.log(category)
+  // console.log("server",Keywords)
+  // console.log("arr",array);
+  // console.log(category)
   if(array===null){
     res.json({data:null });
     return;
@@ -194,7 +194,7 @@ export const getRecommendSearch = async (req, res) => {
       // cards.map((card)=>{
       //     console.log(card.Name)
       // })
-      console.log("cards");
+      // console.log("cards");
       res.json({data:cards });
   } catch (error) {    
       res.status(404).json({ message: error.message });

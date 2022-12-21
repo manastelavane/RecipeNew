@@ -18,7 +18,7 @@ const Input = ({ name, handleChange,value, label, multiline, type,fullWidth,inpu
       fullWidth={fullWidth}
       label={label}
       type={type}
-      InputProps={{
+      InputProps={inputAdornmentText && {
         endAdornment: <InputAdornment position="end">{inputAdornmentText}</InputAdornment>,
       }}
     />

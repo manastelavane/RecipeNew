@@ -11,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Stack } from '@mui/system';
 const initialState = { recipeName: '', recipeDescription: '',image:'', prepTime: '', cookTime: '', totalTime: '',category: 'All',inputValue:'',carbohydrates:'',proteins:'',fats:'',saturatedFats:'',calories:'',sugar:'',cholestrol:'',fibre:'',sodium:'',tags:[],ingredientsinfo:[{ingreamount:0,unit:'',ingredient:''}],stepsinfo:[{stepsinfoindi:''}]};
 const Contribute = () => {
+  const [temp,setTemp]=useState('1');
     const [form, setForm] = useState(initialState);
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
     const handleAddChip = (tag) => {
@@ -47,8 +48,8 @@ const Contribute = () => {
       setForm({...form,ingredientsinfo:data})
   }
   const removeStepsFields = (index) => {
-    console.log(index)
-    console.log(form.stepsinfo)
+    // console.log(index)
+    // console.log(form.stepsinfo)
     let data = [...form.stepsinfo];
     data.splice(index, 1)
     setForm({...form,stepsinfo:data})
@@ -57,9 +58,14 @@ const submit = (e) => {
   e.preventDefault();
   console.log("form",form)
 }
+useEffect(() => {
+  window.scrollTo(0, 0)
+}, [])
       useEffect(()=>{
-        console.log(form)
-      },[form,form.stepsinfo.length])
+        // console.log(form?.stepsinfo.length)
+        // console.log(form)
+        setTemp('3')
+      },[form,form?.stepsinfo,form.stepsinfo.length])
   return (
     <div className='contribute'>
         <Navbar/>
@@ -143,7 +149,7 @@ const submit = (e) => {
                         {form.ingredientsinfo.map((input, index) => {
                             return (
                                 // <div className="nomargin" key={index}>
-                                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 0.2, sm: 2, md: 4 }} alignItems="center">
+                                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 0.2, sm: 2, md: 4 }} alignItems="center" key={index}>
                                 {/* <div> */}
                                     <Input type="number" className="" name="ingreamount" label="Amount" handleChange={event => handleIngreFormChange(event, index)}/>
                                     <Input type="text" className="" name="unit" label="Unit" handleChange={event => handleIngreFormChange(event, index)}/>

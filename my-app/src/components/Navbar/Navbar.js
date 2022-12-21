@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import {MenuData} from "./MenuData"
 import './NavbarStyles.css'
 import React from 'react'
@@ -9,12 +9,21 @@ import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import * as actionType from '../../constants/actionTypes';
+
+
 const Navbar = () => {
+    const dispatch=useDispatch();
     const [clicked,setClicked]=useState(false);
     const [scrolling,setScrolling]=useState(false)
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    useEffect(()=>{
+        if(user && user.result){
+            // console.log("user",user?.result,user)
+
+            dispatch({ type: actionType.AUTH, data:user });
+        }
+    },[user])
     const navigate=useNavigate();
-    const dispatch = useDispatch();
     const handleClick=()=>{
         setClicked(!clicked)
     }
@@ -33,7 +42,7 @@ const Navbar = () => {
     
         setUser(null);
       };
-      console.log(user)
+    //   console.log(user)
     window.addEventListener('scroll',handlescroll);
     function trimname(name){
         var i=name.indexOf(' ');

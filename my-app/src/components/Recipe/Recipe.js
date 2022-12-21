@@ -12,6 +12,8 @@ import { getCard,newComment,getRecommendSearch } from '../../actions/cards';
 import Navbar from '../Navbar/Navbar';
 import { TextField,Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
+import Loader from '../Loader/Loader'
+import LoaderSmall from '../Loader/LoaderSmall'
 // import CommentsCard from './CommentsCard.js';
 import {
     Dialog,
@@ -25,7 +27,7 @@ import ActionAreaCard from '../Card/Card';
 //   import { Rating } from "@material-ui/lab";
 const Recipe = () => {
     const user = JSON.parse(localStorage.getItem('profile'));
-    console.log(user)
+    // console.log(user)
     const { id } = useParams();
     const dispatch = useDispatch();
     // let {card}={
@@ -42,10 +44,10 @@ const Recipe = () => {
     //     ProteinsContent:434,
     //     FatContent:343
     // }
-    const { card,isLoading,recommend} = useSelector((state) => state.cards);
+    const { card,isLoading,isRecomendLoading,recommend} = useSelector((state) => state.cards);
     
     const { success, error: reviewError } = useSelector((state) => state.newCommentReducer);
-    console.log(card?.Keywords.join(','))
+    // console.log(card?.Keywords.join(','))
     useEffect(() => {
         dispatch(getCard(id));
       }, [id,dispatch,success,reviewError]);
@@ -79,12 +81,14 @@ const Recipe = () => {
 
     setOpen(false);
   };
-  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 //   const [videos,search]=useVideos(`${card!==undefined?card?.Name:'paneer'} food recipe english`)
       if (isLoading) {
         return (
           <>
-            Loading
+            <Loader/>
           </>
         );
       }
@@ -121,6 +125,7 @@ const Recipe = () => {
     
     //     setOpen(false);
     //   };
+    console.log(isRecomendLoading)
     let recommendedCards = recommend.filter(({ _id }) => _id !== card._id);
     recommendedCards=recommendedCards.slice(0, Math.min(4,recommendedCards.length));
   return (
@@ -323,6 +328,7 @@ const Recipe = () => {
                 <Typography variant="h4">Recommendation :</Typography>
                 <div className='card-container'>
                 {
+                  isRecomendLoading?(<LoaderSmall/>):
                     (recommendedCards.length>0) && recommendedCards?.map((rec,i)=>(
                       <ActionAreaCard card={rec} key={rec._id} />
                     ))
