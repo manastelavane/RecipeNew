@@ -1,39 +1,4 @@
-/* .maincontainer{
-    display: flex;
-    flex-direction: column;
-}
-.green{
-    display: flex;
-    align-items: space-evenly;
-    justify-content:space-evenly;
-    background-color: #1ca677;
-    height: 40vh;
-    width: 100%;
-    color: white;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 30px;
-    font-family: proxima-nova,Helvetica,Arial,sans-serif;
-}
-img{
-    height: 300px;
-    width: 400px;
-    margin: 20vh;
-    border-radius: 15px;
-}
-.three-details{
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-.timeitem {
-    margin: 20px;
-}
-.timedetails{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-} */
+
 
 .main-content{
     position: relative;
@@ -358,3 +323,52 @@ li{
     justify-content: center;
     align-items: center;    
   }
+  @media screen and (max-width:1000px) {
+    .main-content {
+      position:static;
+      padding:0;
+    }
+  .main-content::before{
+    height: 0;
+  }
+  .outer-two-container{
+    width: 0;
+    justify-content:center;
+    padding: 0;
+    margin: 0;
+  }
+  .two-container{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .two-container-image{
+    width: 100vw;
+    height: auto;
+  }
+  .two-container-content{
+    margin-top: 20px;
+  }
+.two-container-image>img{
+  width:100vw;
+  height: 40vh;
+}
+.nutrients-info-container{
+  flex-direction: column;
+}
+.time-label,.time-value,.time-value__unit{
+  color: black!important;
+}
+.time-value-icon{
+  color:#1ca677;
+}
+.two-container-content-header{
+  width: 100vw;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+}
+.ul-nutrients{
+  justify-content: center;
+  padding: 0;
+}
+}

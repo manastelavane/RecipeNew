@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCard,newComment,getRecommendSearch } from '../../actions/cards';
 import Navbar from '../Navbar/Navbar';
 import { TextField,Typography } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Loader from '../Loader/Loader'
 import LoaderSmall from '../Loader/LoaderSmall'
 // import CommentsCard from './CommentsCard.js';
@@ -24,9 +24,16 @@ import {
   } from "@material-ui/core";
 import CommentsCard from './CommentsCard.js';
 import ActionAreaCard from '../Card/Card';
+import Ingredients from './Ingredients';
 //   import { Rating } from "@material-ui/lab";
 const Recipe = () => {
     const user = JSON.parse(localStorage.getItem('profile'));
+    const navigate=useNavigate()
+    useEffect(()=>{
+      if(!user){
+        navigate('/auth')
+      }
+    },[user])
     // console.log(user)
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -64,7 +71,7 @@ const Recipe = () => {
     //   console.log(card)
     //   const [selectedVideo,setSelectedVideo]=useState(null)
   
-  const [quantity,setQuantity]=useState(card?.RecipeServings)
+  
   const [curcomment,setCurcomment]=useState('')
   const [rating,setRating]=useState(0)
   const [open, setOpen] = useState(false);
@@ -128,6 +135,7 @@ const Recipe = () => {
     console.log(isRecomendLoading)
     let recommendedCards = recommend.filter(({ _id }) => _id !== card._id);
     recommendedCards=recommendedCards.slice(0, Math.min(4,recommendedCards.length));
+    
   return (
     <>
     <Navbar/>
@@ -248,21 +256,7 @@ const Recipe = () => {
           </div>
         </div>
       </div> */}
-      <div className='quantity'>
-        Quantity : &nbsp;
-        <TextField name="quantity" variant="outlined" color='primary'  value={quantity} onChange={(e) => setQuantity( e.target.value )} />
-      </div>
-      <div className='ingredients'>
-      <Typography variant="h4">Ingredients :</Typography>
-      <div className='ingredients-list'>
-        {
-            card?.RecipeIngredientParts.map((ing,i)=>(
-                <Typography variant="h6" className='ingredients-item' key={i}>{card.RecipeIngredientQuantities[i]} - {ing}</Typography>
-            ))
-            
-        }
-      </div>
-      </div>
+      <Ingredients card={card}/>
       <div className='steps'>
         <Typography variant="h4">Recipe Steps :</Typography>
         <div className='steps-box'>

@@ -8,7 +8,7 @@ const router = express.Router();
 
 // router.get('/search', getCardsBySearch);
 router.get('/', getCards);
-router.post('/',  createCard);
+router.post('/createcard', createCard);
 router.put('/review', createCardComment);
 router.get('/new', getNewCards);
 router.get('/recomendsearch', getRecommendSearch);

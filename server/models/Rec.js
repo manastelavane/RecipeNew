@@ -2,15 +2,15 @@ import mongoose from 'mongoose';
 
 const recSchema = mongoose.Schema({
     level_0:{type:Number,default:0},
-    index:Number,
+    index:{type:Number,default:0},
     RecipeId:{type:Number,default:0},
     Name:String,
-    AuthorId:Number,
+    AuthorId:String | Number,
     AuthorName:String,
     CookTime:Number,
     PrepTime:Number,
     TotalTime:Number,
-    DatePublished:Date,
+    DatePublished:{type:Date,default:Date.now()},
     Description:String,
     Images:[String],
     RecipeCategory:String,
@@ -29,7 +29,7 @@ const recSchema = mongoose.Schema({
     SugarContent:Number,
     ProteinContent:Number,
     RecipeServings:Number,
-    RecipeYield:String,
+    RecipeYield:{type:String,default:"people"},
     RecipeInstructions:[String],
     Comments:[
         {
@@ -54,7 +54,7 @@ const recSchema = mongoose.Schema({
     ],
     CommentsCount:{
         type: Number,
-        required: true,
+        default:0,
       },
 },{collection:'SortRec'});
 

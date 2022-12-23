@@ -11,9 +11,9 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
 const New = () => {
+  const navigate=useNavigate()
     const query = useQuery();
   const page = query.get('page') || 1;
-  const navigate=useNavigate()
     const dispatch=useDispatch()
     const {isLoading,neww,newnumberOfPages} = useSelector((state) => state.cards);
     useEffect(()=>{

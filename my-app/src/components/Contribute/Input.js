@@ -15,9 +15,12 @@ const Input = ({ name, handleChange,value, label, multiline, type,fullWidth,inpu
       multiline={multiline}
       minRows={3}
       required
-      fullWidth={fullWidth}
+      fullWidth={window.width>=700?false:fullWidth}
       label={label}
       type={type}
+      inputProps={{
+        step: "0.1"
+      }}
       InputProps={inputAdornmentText && {
         endAdornment: <InputAdornment position="end">{inputAdornmentText}</InputAdornment>,
       }}

@@ -1,6 +1,6 @@
-import { FETCH_ALL,FETCH_CARD,FETCH_NEW_ALL,START_LOADING,START_RECOMMEND_LOADING,END_LOADING,NEW_COMMENT_REQUEST,NEW_COMMENT_SUCCESS,NEW_COMMENT_FAIL,FETCH_BY_SEARCH } from '../constants/actionTypes';
+import { CREATE,FETCH_ALL,FETCH_CARD,FETCH_NEW_ALL,START_LOADING,START_RECOMMEND_LOADING,END_LOADING,NEW_COMMENT_REQUEST,NEW_COMMENT_SUCCESS,NEW_COMMENT_FAIL,FETCH_BY_SEARCH } from '../constants/actionTypes';
 
-export const cards=(state = {isLoading:true,isRecomendLoading:true,cards:[],recommend:[],neww:[]}, action) => {
+export const cards=(state = {isLoading:false,isRecomendLoading:true,cards:[],recommend:[],neww:[]}, action) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true }
@@ -19,6 +19,9 @@ export const cards=(state = {isLoading:true,isRecomendLoading:true,cards:[],reco
     case FETCH_BY_SEARCH:
       console.log("hi",action.data)
       return { ...state, recommend: action.data,isRecomendLoading:false };
+    case CREATE:
+        console.log("created",action.data)
+        return {...state,isLoading: false}
     default:
       return state;
   }

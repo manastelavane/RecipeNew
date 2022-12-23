@@ -66,13 +66,13 @@ export const getCard = async (req, res) => {
     }
 }
 export const createCard = async (req, res) => {
-    const card = req.body;
+    const formData = req.body;
 
-    const newRec = new SortRec({ ...card })
+    const newRec = new SortRec({ ...formData })
 
     try {
         await newRec.save();
-
+        
         res.status(201).json(newRec );
     } catch (error) {
         res.status(409).json({ message: error.message });

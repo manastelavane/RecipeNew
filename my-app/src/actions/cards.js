@@ -7,7 +7,7 @@
  * @return {Promise<string>} The data from the URL.
  */
 
-import { FETCH_ALL,FETCH_CARD,FETCH_NEW_ALL,START_LOADING,START_RECOMMEND_LOADING,END_LOADING,NEW_COMMENT_REQUEST,NEW_COMMENT_SUCCESS,NEW_COMMENT_FAIL,FETCH_BY_SEARCH} from '../constants/actionTypes';
+import { FETCH_ALL,FETCH_CARD,FETCH_NEW_ALL,START_LOADING,START_RECOMMEND_LOADING,END_LOADING,NEW_COMMENT_REQUEST,NEW_COMMENT_SUCCESS,FETCH_BY_SEARCH, CREATE} from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
 export const getCards = (category,page) => async (dispatch) => {
@@ -74,4 +74,13 @@ export const getRecommendSearch = (searchQuery) => async (dispatch) => {
     console.log(error);
   }
 };
+export const createCard = (formData) => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const { data } = await api.createCard(formData);
 
+    dispatch({ type: CREATE, data });
+  } catch (error) {
+    console.log(error);
+  }
+};

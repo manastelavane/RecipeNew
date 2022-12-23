@@ -28,20 +28,29 @@ const Home = () => {
   const {isLoading,cards,numberOfPages} = useSelector((state) => state.cards);
   const dispatch = useDispatch();
   const navigate=useNavigate()
+  
+  useEffect(() => {
+    dispatch(getCards(category,page));
+  }, [ dispatch,page]);
   useEffect(()=>{
     dispatch(getCards(category,1))
   },[])
   useEffect(() => {
-    dispatch(getCards(category,page));
-    ref.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }, [ dispatch,page]);
-  useEffect(() => {
     dispatch(getCards(category,1))
     navigate(`/card?category=${category}&page=1`);
   }, [ dispatch,category,navigate]);
+  useEffect(()=>{
+    console.log(category,page,typeof(category),typeof(page))
+    if(page==="1" && category==="All"){
+      window.scrollTo(0, 0)
+    }else{
+      ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+    
+  },[page])
   // console.log(numberOfPages)
   // console.log("card",cards)
   // console.log("Hi")

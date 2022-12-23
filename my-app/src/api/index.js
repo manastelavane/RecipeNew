@@ -17,7 +17,7 @@ export const fetchCard = (id) => API.get(`/card/${id}`);
 export const postComment = (reviewData,config) => API.put(`/card/review`,reviewData,config);
 export const getRecommendSearch = (searchQuery) => API.get(`/card/recomendsearch?Keywords=${searchQuery.Keywords}&category=${searchQuery.category}`);
 // export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
-// export const createPost = (newPost) => API.post('/posts', newPost);
+export const createCard = (formData) => API.post('/card/createcard', formData);
 // export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 // export const comment = (value, id) => API.post(`/posts/${id}/commentPost`, { value });
 // export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
