@@ -51,9 +51,6 @@ const Home = () => {
     }
     
   },[page])
-  // console.log(numberOfPages)
-  // console.log("card",cards)
-  // console.log("Hi")
   return (
     <>
     <Navbar/>
@@ -63,13 +60,7 @@ const Home = () => {
 
       <h3 style={{textShadow:"2px 1px black"}}>Explore over <b style={{textShadow:"1px 1px black"}}>150,000+</b> Best Recipes over the world.</h3>
       <br/>
-      {/* <div className="hero-input"> */}
-            
-            {/* <input className='hero-search' placeholder='Search Recipe by name...'></input> */}
             <Autocompletee />
-            
-        {/* <button><i className="fa fa-search icon" ></i> </button> */}
-      {/* </div> */}
       <br/>
       <h6 style={{textShadow:"2px 1px black",textAlign:"center"}}>Can't think of any Recipe? <span className='lightfont'>Try out this Popular tags.</span></h6>
       <div className="tags">
@@ -81,68 +72,6 @@ const Home = () => {
         </div>
       </div>
       <br/>
-    {/* <div className="maincontainer">
-        
-        <div>
-      <i className="fa-solid fa-arrow-left"></i>
-      <span className='all'>
-    <BsFilter/>
-    All
-      </span>
-        </div>
-      <div className='container example-one'>
-      
-        <header className='example-one-header scroll'>
-        
-            <nav className='vertical-align-middle'>
-                <span className='nav-item'>
-                    Recipes Home
-                </span>
-                <span className='nav-item'>
-                    All Quick & Easy Recipes
-                </span>
-                <span className='nav-item'>
-                    All Main Dishes
-                </span>
-                <span className='nav-item'>
-                    All Breakfast Dishes
-                </span>
-                <span className='nav-item'>
-                    All Lunch Dishes
-                </span>
-                <span className='nav-item'>
-                    All Beverages Recipes
-                </span>
-                <span className='nav-item'>
-                    All Salad Recipes
-                </span>
-                <span className='nav-item'>
-                    All Snacks Recipes
-                </span>
-                <span className='nav-item'>
-                    All Vegan Recipes
-                </span>
-                <span className='nav-item'>
-                    All Dessert Recipes
-                </span>
-                <span className='nav-item'>
-                    All Slides Recipes
-                </span>
-                <span className='nav-item'>
-                    All Vegetarian Recipes
-                </span>
-                <span className='nav-item'>
-                    All Paleo Recipes
-                </span>
-                <span className='nav-item'>
-                    All Gluten Free Recipes
-                </span>
-                
-            </nav>
-        </header>
-        </div>
-      <i className="fa-solid fa-arrow-right"></i>
-      </div> */}
       <div className="autocomplete-div" ref={ref}>
       <Autocomplete
       className='autocomplete'

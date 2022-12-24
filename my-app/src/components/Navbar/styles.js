@@ -9,6 +9,7 @@ export default makeStyles((theme) => ({
   },
   profile: {
     display: 'flex',
+    flexWrap:'wrap',
     justifyContent: 'space-between',
     width: 'auto',
   },

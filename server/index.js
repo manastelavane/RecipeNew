@@ -6,11 +6,6 @@ import cors from 'cors';
 import dotenv from 'dotenv'
 import userRouter from "./routes/user.js";
 import cardRouter from "./routes/cards.js";
-import SortRec from './models/Rec.js'
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-
-import UserModal from "./models/user.js";
 
 const app = express();
 dotenv.config();
@@ -23,6 +18,8 @@ const secret = 'test';
 app.use("/user", userRouter);
 app.use("/card", cardRouter);
 const PORT = process.env.PORT|| 5000;
+
+
 
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))

@@ -55,13 +55,16 @@ const Profile = () => {
     dispatch(updateProfile(profile))
     setOpen(!open)
   }
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <>
     <div className="container">
         <div className='back' title="Back" onClick={()=>navigate('/')}>
        <IoArrowBackSharp/> 
       </div>
-              <h1>My Profile</h1>
+              <h1 style={{textShadow:'0.5px 0.5px black'}}>My Profile</h1>
           <div className="profileContainer">
             <div>
               <img src={user?.result?.selectedFile} alt={user?.result?.name} />
@@ -80,7 +83,10 @@ const Profile = () => {
           </div>
             <Link className="link" onClick={dialogToggle}>Edit Profile</Link>
             </div>
-            <h1 className="border"></h1>
+            <div className="bordercontainer">
+              <h1 className="border"></h1>
+            </div>
+            
             <br/>
             <h4 style={{textAlign:'center'}}>No Recipes Contributed by you yet...</h4>
             <Dialog

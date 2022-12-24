@@ -9,18 +9,18 @@ export const MenuData=[
         title:"New",
         url:"/new",
         cName:"nav-links",
-        icon:"fa-solid fa-circle-info"
+        icon:"fa-solid fa-fire"
     },
     {
         title:"Contribute",
         url:"/contribute",
         cName:"nav-links",
-        icon:"fa-solid fa-briefcase"
+        icon:"fa-solid fa-hand-holding-hand"
     },
     {
-        title:"Contact",
-        url:"#",
+        title:"Chat",
+        url:"/chat",
         cName:"nav-links",
-        icon:"fa-solid fa-address-book"
+        icon:"fa-solid fa-message",
     },
 ]

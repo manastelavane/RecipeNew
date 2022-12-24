@@ -53,7 +53,7 @@ const Navbar = () => {
   return (
     <div>
       <nav className={scrolling?"NavbarItems scrolling":"NavbarItems"}>
-                <h1 className='logo'><img src={logo} height="50px" width="50px" alt='cookwell'/>COOKWELL </h1>
+                <Link to='/' className='text-decoration-none'><h1 className='logo' ><img src={logo} height="50px" width="50px" alt='cookwell'/>COOKWELL </h1></Link>
                 <div className='menu-icons' onClick={handleClick}>
                     <i className={clicked?"fas fa-times":"fas fa-bars"}></i>
                 </div>
@@ -76,7 +76,7 @@ const Navbar = () => {
                         <Avatar onClick={()=>navigate('/profile')} className={classes.purple} alt={user?.result.name} src={user?.result?.selectedFile}></Avatar>
                         <Typography onClick={()=>navigate('/profile')} className="userName" variant="h6">{trimname(user?.result.name)}</Typography>
                         
-                        <Button variant="contained" className={classes.logout} color="secondary" size="small" onClick={logout}>Logout</Button>
+                        <Button variant="contained" className={classes.logout} color="secondary" size="small" onClick={logout}>&nbsp;&nbsp;Logout&nbsp;&nbsp;<i className='fa-solid fa-right-from-bracket'></i>&nbsp;&nbsp;</Button>
                     </div>
                     ) : (
                     <Button component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>

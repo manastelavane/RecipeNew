@@ -73,22 +73,9 @@ const Autocomplete = () => {
         onChange={(e,value)=>navigate(`/recipe/${value?._id}`)}
         options={searchResults}
         getOptionLabel={(option) => option.Name}
-        // onChange={(event, newValue) => {
-        //     navigate('/')
-        //   }}
         renderInput={(params) => <TextField {...params} hiddenLabel placeholder='Search Recipe...' variant="outlined" className='autocomplete-text' onChange={(e)=>onChangeone(e)}  />}
       />
     </>
-    // <div className="hero-input">
-    //   <input className='hero-search' placeholder='Search Recipe by name...' onChange={(e)=>setQueryText(e.target.value)} type="text" value={queryText}/>
-    //   <button><i className="fa fa-search icon" ></i> </button>
-    //   {
-    //     searchResults.map((i)=>(
-    //         <p key={i?.name}style={{fontSize:'8px'}}>{i?.Name}</p>
-    //         )
-    //         )
-    //   }
-    // </div>
   )
 }
 

@@ -15,7 +15,9 @@ import Contribute from './components/Contribute/Contribute';
 import New from './components/New/New';
 import Loader from './components/Loader/Loader';
 import LoaderSmall from './components/Loader/LoaderSmall';
-import Chat from './components/Chat/Chat';
+import Chat from './components/chat/index';
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:4000'); 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
   // console.log(user)
@@ -33,7 +35,10 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/new" element={<New />} />
           <Route path="/contribute" element={<Contribute />} />
-          <Route path="/chat" element={<Chat />} />
+          <Route
+            path='/chat'
+            element={<Chat username={user?.result?.name} room={"JavaScript"} socket={socket} />}
+          />
           {/* <Route path="/:category" element={<Home category=category />} /> */}
           {/* <Route path="/auth" exact element={() => ((!user || user.length===0) ? <Auth /> : navigate('/'))} /> */}
         </Routes>
