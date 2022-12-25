@@ -85,7 +85,7 @@ const Profile = () => {
         <h1 className="border"></h1>
       </div>
       <br/>
-      <h4 style={{textAlign:'center'}}>No Recipes Contributed by you yet...</h4>
+      
       <Dialog
         aria-labelledby="simple-dialog-title"
         open={open}

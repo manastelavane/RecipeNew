@@ -17,7 +17,7 @@ const Ingredients = ({card}) => {
         <div className='ingredients-list'>
             {
                 card?.RecipeIngredientParts.map((ing,i)=>(
-                    <Typography variant="h6" className='ingredients-item' key={i}>{((convertnumber((card.RecipeIngredientQuantities[i]))/(card?.RecipeServings | 1))*quantity).toFixed(2)} - {ing}</Typography>
+                    <Typography variant="body1" className='ingredients-item' key={i}>{((convertnumber((card.RecipeIngredientQuantities[i]))/(card?.RecipeServings | 1))*quantity).toFixed(2)} - {ing}</Typography>
                 ))
             }
         </div>

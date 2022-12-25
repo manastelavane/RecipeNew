@@ -16,6 +16,7 @@ import ActionAreaCard from '../Card/Card';
 import Ingredients from './Ingredients';
 import Loader from '../Loader/Loader'
 import './Recipe.css'
+import VideoComponent from '../Video/VideoComponent';
 
 const Recipe = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -189,6 +190,7 @@ const Recipe = () => {
             <Doughnut data={doughnutState} />
           </div>
         </div>
+        <VideoComponent />
         <Ingredients card={card}/>
         <div className='steps'>
           <Typography variant="h4">Recipe Steps :</Typography>

@@ -7,7 +7,7 @@ const VideoList = ({videos,onVideoSelect}) => {
       return <VideoItem key={video.id.videoId}video={video} onVideoSelect={onVideoSelect} />;
   });
   return (
-    <div className='list'>
+    <div className='video-list'>
       {renderedList}
     </div>
   )
