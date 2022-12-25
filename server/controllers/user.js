@@ -74,9 +74,7 @@ export const googleSignUp = async (req, res) => {
 export const updateProfile = async (req, res) => {
   const { id,name,selectedFile } = req.body;
   const user=await UserModal.findOne({_id:id})
-  // console.log(user)
   const updateduser = { _id:user._id,email:user.email,password:user.password,googleId:user.googleId,name:name,selectedFile:selectedFile };
-  // console.log(updateduser)
   await UserModal.findByIdAndUpdate(id, updateduser, { new: true });
   
   res.json(updateduser);

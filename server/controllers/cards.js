@@ -1,5 +1,4 @@
 import express from 'express';
-// import mongoose from 'mongoose';
 
 import SortRec from '../models/Rec.js'
 
@@ -8,96 +7,68 @@ const router = express.Router();
 
 export const getCards = async (req, res) => { 
     try {
-        // console.log(req.query);
         const {category,page}=req.query;
-        // console.log("i got",category,page);
         const category1 = (category!="All")
         ? {
             RecipeCategory: category,
             }
         : {};
         const LIMIT = 10;
-        const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
-    
+        const startIndex = (Number(page) - 1) * LIMIT; 
         const total = await SortRec.countDocuments(category=="All"?{}:{RecipeCategory:category});
-        // console.log(category1)
         const cardMessages = await SortRec.find(category1).limit(LIMIT).skip(startIndex);
-        // console.log(postMessages.length)  
-        // console.log(productsCount)
-        // console.log(category);
-        // console.log(Number(page));
-        // console.log(Math.ceil(total / LIMIT));
         res.status(200).json({data:cardMessages, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
     } catch (error) {
         res.status(404).json({ message: error });
     }
 }
+
 export const getNewCards = async (req, res) => { 
     try {
-        // console.log(req.query);
         const {page}=req.query;
-        // console.log("i got",category,page);
         const LIMIT = 10;
-        const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
-    
+        const startIndex = (Number(page) - 1) * LIMIT;
         const total = await SortRec.countDocuments();
-        // console.log(category1)
-        console.log(total)
         const cardMessages = await SortRec.find().sort({DatePublished:-1}).limit(LIMIT).skip(startIndex);
-        // console.log(postMessages.length)  
-        // console.log(productsCount)
-        // console.log(category);
-        // console.log(Number(page));
-        // console.log(Math.ceil(total / LIMIT));
         res.status(200).json({data:cardMessages, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
     } catch (error) {
         res.status(404).json({ message: error });
     }
 }
+
 export const getCard = async (req, res) => { 
     const { id } = req.params;
-    // console.log(id)
     try {
         const card = await SortRec.findById(id);
-        // console.log(card)
         res.status(200).json(card);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
+
 export const createCard = async (req, res) => {
     const formData = req.body;
-
     const newRec = new SortRec({ ...formData })
-
     try {
         await newRec.save();
-        
         res.status(201).json(newRec );
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
 }
+
 export const createCardComment = async (req, res) => {
     const { rating, comment, CardId,UserId,UserName } = req.body;
-    // console.log("cardid",CardId)
-    // console.log("req",UserId)
-    // console.log(rating,comment,CardId)
     const review = {
       user: UserId,
       name:UserName,
       rating: Number(rating),
       comment,
     };
-    // console.log(review)
-  
     const card = await SortRec.findById(CardId);
-    // console.log(card)
     const isReviewed = card.Comments.find(
       (rev) => rev?.user?.toString() === UserId.toString()
     );
-    // console.log(UserId._id)
-  
     if (isReviewed) {
       card.Comments.forEach((rev) => {
         if (rev.user.toString() === UserId.toString())
@@ -107,48 +78,36 @@ export const createCardComment = async (req, res) => {
       card.Comments.push(review);
       card.CommentsCount = card.Comments.length;
     }
-  
     let avg = 0;
-  
     card.Comments.forEach((rev) => {
       avg += rev.rating;
     });
-  
     card.AggregatedRating = (avg+card.AggregatedRating) / (card.Comments.length+1);
-  
     await card.save({ validateBeforeSave: false });
-  
     res.status(200).json({
       success: true,
     });
   };
 
 export const getCardsBySearch = async (req, res) => {
-    // console.log("serverrr")
     const { Keywords } = req.query;
-    // console.log("server",Keywords)
     try {
-        // const title = new RegExp(searchQuery, "i");
         const cards = await SortRec.find({  Keywords: { $in: Keywords.split(',') } }).limit(4);
-        // cards.map((card)=>{
-        //     console.log(card.Name)
-        // })
         res.json({data:cards });
     } catch (error) {    
         res.status(404).json({ message: error.message });
     }
 }
+
 export const autocompletesearch = async (req, res) => {
   try {
     const { name } = req.query
-
     const agg = [
       {$search: {autocomplete: {query: name, path: "Name"}}},
       {$limit: 10},
       {$project: {_id: 1,Name: 1}}
   ];
     const response = await SortRec.aggregate(agg)
-
     return res.json(response)
   } catch (error) {
     console.log("error",error)
@@ -158,15 +117,11 @@ export const autocompletesearch = async (req, res) => {
 export const getRecommendSearch = async (req, res) => {
   const { Keywords,category } = req.query;
   var array = Keywords.split(',');
-  // console.log("server",Keywords)
-  // console.log("arr",array);
-  // console.log(category)
   if(array===null){
     res.json({data:null });
     return;
   } 
   try {
-      // const title = new RegExp(searchQuery, "i");
       const cards = await SortRec.aggregate([
         {
           "$set": {
@@ -174,7 +129,6 @@ export const getRecommendSearch = async (req, res) => {
               "$size": {
                 "$setIntersection": [
                   "$RecipeIngredientParts",
-                  // your ingredients/tags/etc. go here
                   array
               ]
             }
@@ -190,11 +144,6 @@ export const getRecommendSearch = async (req, res) => {
         "$limit": 6
       }
       ])
-      // console.log("start")
-      // cards.map((card)=>{
-      //     console.log(card.Name)
-      // })
-      // console.log("cards");
       res.json({data:cards });
   } catch (error) {    
       res.status(404).json({ message: error.message });
