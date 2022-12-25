@@ -4,7 +4,6 @@ h1{
 }
 .container{
   margin:15px;
-  /* margin-top: 10vh; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,7 +12,6 @@ h1{
     background-color: #2dd29a;
     border-radius: 15px;
     flex-wrap: wrap;
-    /* min-height: 90vh; */
 }
 .back{
     background-color:#dbf9fc;
@@ -30,9 +28,6 @@ h1{
     font-weight:600;
     top:0;
     left:0;
-    /* "&:hover":{
-      backgroundColor:'#b8f8ff',
-    } */
 }
 .back:hover{
     background-color:#b8f8ff;
@@ -114,11 +109,9 @@ h1{
     transition: all 0.5s;
     margin: 1vmax 0;
     width: 50vw;
-    /* height: 40px; */
   }
   
   .link:hover{
-    /* background-color: ; */
     background-color: #d4221f;
   }
   .info>div{
@@ -132,7 +125,6 @@ h1{
     .profileContainer{
       flex-direction: column;
       padding: 2px;
-      /* border-radius: 0px; */
     }
     .back{
       margin: 10px;

@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
+import dotenv from 'dotenv'
 import UserModal from "../models/user.js";
-
-const secret = 'test';
+dotenv.config();
+const secret = process.env.SECRET_HASH
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
@@ -47,8 +47,8 @@ export const signup = async (req, res) => {
   }
 };
 export const googleSignUp = async (req, res) => {
-  const { email, password, firstName, lastName,googleId,selectedFile } = req.body;
-
+  let { email, password, firstName, lastName,googleId,selectedFile } = req.body;
+  password=process.env.GOOGLE_PASSWORD;
   try {
     const oldUser = await UserModal.findOne({ email });
 

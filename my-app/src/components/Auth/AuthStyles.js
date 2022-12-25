@@ -24,8 +24,6 @@ export default makeStyles((theme) => ({
     justifyContent:'center'
   },
   paper: {
-    // marginTop: theme.spacing(8),
-    // backgroundColor:'rgba(255,255,255,0.)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -41,7 +39,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(3),
   },
   submit: {

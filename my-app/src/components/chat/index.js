@@ -1,12 +1,13 @@
-import styles from './styles.module.css';
-import { IoArrowBackSharp } from "react-icons/io5";
-import MessagesReceived from './messages';
-import SendMessage from './send-message';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import MessagesReceived from './messages';
+import SendMessage from './send-message';
+
+import { IoArrowBackSharp } from "react-icons/io5";
+import styles from './styles.module.css';
+
 const Chat = ({ username, room, socket }) => {
-  
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const navigate=useNavigate()
     useEffect(()=>{
@@ -25,12 +26,12 @@ const Chat = ({ username, room, socket }) => {
       <div className='back' title="Back" onClick={()=>navigate('/')}>
        <IoArrowBackSharp/> 
       </div>
-    <h1 style={{textAlign:'center',fontSize:'4vh',textShadow:'1px 1px black'}}>CookWell Forum</h1>
+      <h1 style={{textAlign:'center',fontSize:'4vh',textShadow:'1px 1px black'}}>CookWell Forum</h1>
       <div className={styles.innerContainer}>
         <MessagesReceived socket={socket} username={username} />
         <SendMessage socket={socket} username={username} room={room} />
       </div>
-      </div>
+    </div>
   );
 };
 

@@ -4,28 +4,38 @@ export const cards=(state = {isLoading:false,isRecomendLoading:true,cards:[],rec
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true }
+
     case START_RECOMMEND_LOADING:
       return {...state,isRecomendLoading:true}
+
     case END_LOADING:
       return { ...state, isLoading: false }
+
     case FETCH_ALL:
       return {...state,cards:action.payload.data,currentPage: action.payload.currentPage,
         numberOfPages: action.payload.numberOfPages};
+
     case FETCH_NEW_ALL:
       return {...state,neww:action.payload.data,currentnewPage: action.payload.currentPage,
         newnumberOfPages: action.payload.numberOfPages};
+
     case FETCH_CARD:
       return { ...state, card: action.payload.card };
+
     case FETCH_BY_SEARCH:
       console.log("hi",action.data)
       return { ...state, recommend: action.data,isRecomendLoading:false };
+
     case CREATE:
         console.log("created",action.data)
         return {...state,isLoading: false}
+        
     default:
       return state;
   }
 };
+
+
 export const newCommentReducer = (state = {}, action) => {
   switch (action.type) {
     case NEW_COMMENT_REQUEST:
@@ -33,11 +43,13 @@ export const newCommentReducer = (state = {}, action) => {
         ...state,
         loading: true,
       };
+
     case NEW_COMMENT_SUCCESS:
       return {
         loading: false,
         success: action.payload,
       };
+      
     case NEW_COMMENT_FAIL:
       return {
         ...state,

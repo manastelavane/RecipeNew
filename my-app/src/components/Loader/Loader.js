@@ -9,7 +9,7 @@ const Loader = () => {
           <h3>Loader</h3>
           <br/>
           <p>"{LoaderQuotes[Math.floor(Math.random()*LoaderQuotes.length)]}"</p>
-        </div>
+    </div>
   )
 }
 

@@ -1,3 +1,4 @@
+//recipe cards related constants
 export const CREATE = 'CREATE';
 export const UPDATE = 'UPDATE';
 export const UPDATE_SUCCESS = 'UPDATE_SUCCESS';
@@ -15,5 +16,6 @@ export const NEW_COMMENT_FAIL='NEW_COMMENT_FAIL'
 export const FETCH_NEW_ALL='FETCH_NEW_ALL'
 export const START_RECOMMEND_LOADING='START_RECOMMEND_LOADING'
 
+//user auth related constants
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';

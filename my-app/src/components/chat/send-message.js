@@ -1,10 +1,11 @@
-import styles from './styles.module.css';
 import React, { useState } from 'react';
 
+import styles from './styles.module.css';
+
 import { IoMdSend } from 'react-icons/io';
+
 const SendMessage = ({ socket, username, room }) => {
   const [message, setMessage] = useState('');
-
   const sendMessage = () => {
     if (message !== '') {
       const __createdtime__ = Date.now();

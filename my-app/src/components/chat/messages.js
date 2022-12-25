@@ -1,15 +1,13 @@
-import styles from './styles.module.css';
 import { useState, useEffect, useRef } from 'react';
+import styles from './styles.module.css';
 
 const Messages = ({ socket , username}) => {
   const [messagesRecieved, setMessagesReceived] = useState([]);
-
-  const messagesColumnRef = useRef(null); // Add this
+  const messagesColumnRef = useRef(null); 
 
   // Runs whenever a socket event is recieved from the server
   useEffect(() => {
     socket.on('receive_message', (data) => {
-      console.log(data);
       setMessagesReceived((state) => [
         ...state,
         {
@@ -19,16 +17,13 @@ const Messages = ({ socket , username}) => {
         },
       ]);
     });
-
     // Remove event listener on component unmount
     return () => socket.off('receive_message');
   }, [socket]);
 
-  // Add this
   useEffect(() => {
     // Last 100 messages sent in the chat room (fetched from the db in backend)
     socket.on('last_100_messages', (last100Messages) => {
-      console.log('Last 100 messages:', JSON.parse(last100Messages));
       last100Messages = JSON.parse(last100Messages);
       // Sort these messages by __createdtime__
       last100Messages = sortMessagesByDate(last100Messages);
@@ -38,61 +33,57 @@ const Messages = ({ socket , username}) => {
     return () => socket.off('last_100_messages');
   }, [socket]);
 
-  // Add this
+ 
   // Scroll to the most recent message
   useEffect(() => {
     messagesColumnRef.current.scrollTop =
       messagesColumnRef.current.scrollHeight;
   }, [messagesRecieved]);
 
-  // Add this
   function sortMessagesByDate(messages) {
     return messages.sort(
       (a, b) => parseInt(a.__createdtime__) - parseInt(b.__createdtime__)
     );
   }
 
-  // dd/mm/yyyy, hh:mm:ss
-  function formatDateFromTimestamp(timestamp) {
-    console.log(timestamp)
+  function formatDateFromTimestamp(timestamp) {    
     const date = new Date(timestamp);
     return date.toLocaleTimeString();
   }
-  console.log(username)
+
   return (
-    // Add ref to this div
     <div className={styles.messagesColumn} ref={messagesColumnRef}>
       {messagesRecieved.map((msg, i) => 
-      (msg.username==="ChatBot" || msg.username===undefined)?(
-      <>
-        <div className={styles.messagecontainer3}>
-        <div className={styles.message3} key={i}>
-          <p className={styles.msgText}>{msg.message}</p>
-        </div>
-        </div>
-      </>):
-      username===msg.username?(
-        <div className={styles.messagecontainer1}>
-           <div className={styles.msgMeta2}>
-              {formatDateFromTimestamp(msg.__createdtime__)}
+        (msg.username==="ChatBot" || msg.username===undefined)?(
+          <>
+            <div className={styles.messagecontainer3}>
+              <div className={styles.message3} key={i}>
+                <p className={styles.msgText}>{msg.message}</p>
+              </div>
+            </div>
+          </>
+        ):
+        username===msg.username?(
+          <div className={styles.messagecontainer1}>
+            <div className={styles.msgMeta2}>
+                {formatDateFromTimestamp(msg.__createdtime__)}
             </div>
             <div className={styles.message1} key={i}>
               <span className={styles.msgMeta1}>{msg.username}</span>
               <p className={styles.msgText}>{msg.message}</p>
             </div>
-        </div>
-      ):(
-        <div className={styles.messagecontainer2}>
-        <div className={styles.message2} key={i}>
-            <span className={styles.msgMeta1}>{msg.username}</span>
-          <p className={styles.msgText}>{msg.message}</p>
-          
-        </div>
-        <div className={styles.msgMeta2}>
+          </div>
+        ):(
+          <div className={styles.messagecontainer2}>
+            <div className={styles.message2} key={i}>
+              <span className={styles.msgMeta1}>{msg.username}</span>
+              <p className={styles.msgText}>{msg.message}</p>
+            </div>
+            <div className={styles.msgMeta2}>
               {formatDateFromTimestamp(msg.__createdtime__)}
             </div>
-        </div>
-      )
+          </div>
+        )
       )}
     </div>
   );

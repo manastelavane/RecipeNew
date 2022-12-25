@@ -11,7 +11,6 @@ import { createRoot } from 'react-dom/client';
 
 import { reducers } from './reducers';
 const store = configureStore({reducer:reducers}, compose(applyMiddleware(thunk)));
-// const store = createStore(reducers);
 const container = document.getElementById('root');
 const root = createRoot(container);
 
