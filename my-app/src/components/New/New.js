@@ -50,6 +50,7 @@ const New = () => {
               count={newnumberOfPages}
               page={Number(page) || 1}
               variant="outlined"
+              size='small'
               color="primary"
               renderItem={(item) => (
                 <PaginationItem {...item} component={Link} to={`/card/new?page=${item.page}`} />

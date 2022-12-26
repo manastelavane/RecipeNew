@@ -27,7 +27,7 @@
 }
 .two-container-image{
     width: 400px;
-    height: 400px;
+    height: 320px;
 }
 .recipe-image{
     width: 400px;
@@ -247,9 +247,11 @@ li{
     justify-content: center;
   }
   .submitReview {
+    display: flex;
+    justify-content: center;
     border: none;
     background-color: #3f51b5;
-    font: 500 1.3vmax "Roboto";
+    font: 500 1.7vmax "Roboto";
     border-radius: 20px;
     padding: 0.6vmax 2vmax;
     margin: 1vmax 0;
@@ -277,7 +279,7 @@ li{
   
   .commentsHeading {
     color: #000000be;
-    font: 500 1.4vmax "Roboto";
+    font: 500 1.7vmax "Roboto";
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.226);
     padding: 1vmax;
@@ -355,7 +357,7 @@ li{
   }
 .two-container-image>img{
   width:100vw;
-  height: 50vh;
+  height: 40vh;
   margin: 0!important;
 }
 .nutrients-info-container{
