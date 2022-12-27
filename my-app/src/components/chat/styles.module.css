@@ -98,11 +98,10 @@
   font-size: 0.9rem;
   width: 73%;
 }
-.sendbutton{
-  display: none;
-}
+
 .btn {
-  padding: 14px 14px;
+  margin: 0 5px ;
+  padding: 10px 10px;
   border-radius: 6px;
   font-weight: bold;
   font-size: 1.1rem;
@@ -124,19 +123,26 @@
   background: rgb(0, 24, 111);
   color: #fff;
 }
+.circle{
+  background: green;
+    display:inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    padding: 3px;
+    margin: 0px 2px;
+}
 
 @media screen and (max-width:600px) {
   .outerContainer{
       padding: 20px 10px;
   }
-  .sendtext{
-      display: none;
-  }
-  .sendbutton{
-      display: block;
-    }
   .messageInput {
       padding: 7px ;
       width: 80%;
+  }
+  .sendMessageContainer {
+    padding:25px 1px 25px 8px;
+    /* padding: 25px 8px; */
   }
 }

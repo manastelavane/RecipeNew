@@ -17,6 +17,7 @@ export const getCards = async (req, res) => {
         const startIndex = (Number(page) - 1) * LIMIT; 
         const total = await SortRec.countDocuments(category=="All"?{}:{RecipeCategory:category});
         const cardMessages = await SortRec.find(category1).limit(LIMIT).skip(startIndex);
+        console.log("home",cardMessages.length)
         res.status(200).json({data:cardMessages, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
     } catch (error) {
         res.status(404).json({ message: error });
@@ -30,6 +31,7 @@ export const getNewCards = async (req, res) => {
         const startIndex = (Number(page) - 1) * LIMIT;
         const total = await SortRec.countDocuments();
         const cardMessages = await SortRec.find().sort({DatePublished:-1}).limit(LIMIT).skip(startIndex);
+        console.log("new",cardMessages.length)
         res.status(200).json({data:cardMessages, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
     } catch (error) {
         res.status(404).json({ message: error });
@@ -40,6 +42,7 @@ export const getCard = async (req, res) => {
     const { id } = req.params;
     try {
         const card = await SortRec.findById(id);
+        console.log("card")
         res.status(200).json(card);
     } catch (error) {
         res.status(404).json({ message: error.message });
