@@ -23,7 +23,8 @@ const Autocomplete = () => {
    const navigate=useNavigate()
 
   const navigateOnChange=(e,value)=>{
-    if(e.key==='Enter'){
+    var keyCode = e.keyCode || e.which; 
+    if(keyCode === 13){
       navigate(`/relatedrecipe?query=${query}`);
     }else{
       navigate(`/recipe/${value?._id}`);
@@ -57,7 +58,7 @@ const Autocomplete = () => {
         onChange={(e,value)=>navigateOnChange(e,value)}
         options={searchResults}
         getOptionLabel={(option) => option.Name}
-        renderInput={(params) => <TextField {...params} hiddenLabel placeholder='Search Recipe...' variant="outlined" className='autocomplete-text' onChange={(e)=>onChangeone(e)}  />}
+        renderInput={(params) => <TextField {...params} hiddenLabel type="search" placeholder='Search Recipe...' variant="outlined" className='autocomplete-text' onChange={(e)=>onChangeone(e)}  />}
       />
     </>
   )
