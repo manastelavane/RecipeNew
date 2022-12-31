@@ -23,6 +23,14 @@ Welcome to my recipe website! Here, you will find a variety of delicious and eas
 
 If you have a recipe that you'd like to share on the website, please feel free to submit it through the "Contribute" form. All submissions will be reviewed before being added to the website to ensure quality and accuracy.
 
+## Tech Stack
+
+**Client:** React, Redux
+
+**Server:** Node, Express
+
+**Database:** MongoDb, HarperDB
+
 ## Screenshots
 
 Home Page :
