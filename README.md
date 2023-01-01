@@ -50,14 +50,6 @@ Video Fetched from Youtube :
 
 Ingredients, Recipe steps and Comment Section :
 ![App Screenshot](https://raw.githubusercontent.com/manastelavane/RecipeImages/main/inganssteps.png)
-## Contributing
-
-Contributions are always welcome!
-
-See `contributing.md` for ways to get started.
-
-Please adhere to this project's `code of conduct`.
-
 
 ## Environment Variables
 
