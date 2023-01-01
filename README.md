@@ -37,7 +37,7 @@ Home Page :
 ![App Screenshot](https://raw.githubusercontent.com/manastelavane/RecipeImages/main/MainRecipess.png)
 
 Recipe :
-![App Screenshot](https://raw.githubusercontent.com/manastelavane/RecipeImages/main/image.png)
+![App Screenshot](https://raw.githubusercontent.com/manastelavane/RecipeImages/10fb91973dc7181226337c3aa351e4851141b8f4/image.png)
 
 Chat :
 ![App Screenshot](https://raw.githubusercontent.com/manastelavane/RecipeImages/main/chat.png)
