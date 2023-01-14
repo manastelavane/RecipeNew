@@ -34,6 +34,7 @@ const Autocomplete = () => {
     <>
     <Autocompletee
         sx={{
+            
             '& label.Mui-focused': {
                 color: 'black',
               },
@@ -53,6 +54,7 @@ const Autocomplete = () => {
               },
         }}
         className='autocompletee'
+        disableClearable
         freeSolo
         filterOptions={(x)=>x}
         onChange={(e,value)=>navigateOnChange(e,value)}

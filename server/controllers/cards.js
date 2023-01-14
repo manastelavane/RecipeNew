@@ -17,7 +17,8 @@ export const getCards = async (req, res) => {
         const startIndex = (Number(page) - 1) * LIMIT; 
         const total = await SortRec.countDocuments(category=="All"?{}:{RecipeCategory:category});
         const cardMessages = await SortRec.find(category1).limit(LIMIT).skip(startIndex);
-        // console.log("home",cardMessages.length)
+        console.log("home",cardMessages.length,category,page)
+
         res.status(200).json({data:cardMessages, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
     } catch (error) {
         res.status(404).json({ message: error });

@@ -24,7 +24,7 @@ let chatRoom = '';
 let allUsers = []; // All users in current chat room
 // Listen for when the client connects via socket.io-client
 io.on('connection', (socket) => {
-  console.log(`User connected ${socket.id}`);
+  // console.log(`User connected ${socket.id}`);
   socket.on('send_message', (data) => {
     const { message, username, room, __createdtime__ } = data;
     io.in(room).emit('receive_message', data);
@@ -75,12 +75,12 @@ io.on('connection', (socket) => {
       message: `${username} has left the chat`,
       __createdtime__,
     });
-    console.log(`${username} has left the chat`);
+    // console.log(`${username} has left the chat`);
   });
 
 
   socket.on('disconnect', () => {
-    console.log('User disconnected from the chat');
+    // console.log('User disconnected from the chat');
     const user = allUsers.find((user) => user.id == socket.id);
     if (user?.username) {
       allUsers = leaveRoom(socket.id, allUsers);
