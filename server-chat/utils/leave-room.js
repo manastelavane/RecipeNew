@@ -1,5 +1,5 @@
-function leaveRoom(userID, chatRoomUsers) {
+/* eslint-disable linebreak-style */
+export function leaveRoom(userID, chatRoomUsers) {
     return chatRoomUsers.filter((user) => user.id != userID);
-  }
+}
   
-  module.exports = leaveRoom;

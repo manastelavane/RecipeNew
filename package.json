@@ -1,5 +1,9 @@
 {
   "dependencies": {
     "@material-ui/lab": "^4.0.0-alpha.61"
+  },
+  "devDependencies": {
+    "eslint": "^8.31.0",
+    "eslint-plugin-react": "^7.32.0"
   }
 }
